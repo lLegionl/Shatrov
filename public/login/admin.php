@@ -108,7 +108,6 @@
             '<li><button class="edit_btn"><a href="delete.php?id='.$user['id'].'">Удалить</a></button></li>'.
         '</div>';
         }?>
-
                     <h1>Редактирование тарифов</h1>
         <?php
         session_start();
@@ -117,16 +116,16 @@
 
         $stm = $connect->query('SELECT * FROM `tariff`');
         $tariffs = $stm->fetchAll();
-        foreach($tariffs as $tarif)
+        foreach($tariffs as $tariff)
         {
         echo
         '<div class="show_block">'.
             '<ul>'.
-            '<li><p class="tariff_info">'."Название - ".$tarif['tariff_name'].'</p></li>'.
-            '<li><p class="tariff_info">'."скорость - ".$tarif['tariff_speed'].'</p></li>'.
-            '<li><p class="tariff_info">'."стоимость - ".$tarif['tariff_price'].'</p></li>'.
-            '<li><button class="edit_btn"><a href="edit.php?'.$tarif['id'].'">Изменить</a></button></li>'.
-            '<li><button class="edit_btn"><a href="delete.php?'.$tarif['id'].'">Удалить</a></button></li>'.
+            '<li><p class="tariff_info">'."Название - ".$tariff['tariff_name'].'</p></li>'.
+            '<li><p class="tariff_info">'."скорость - ".$tariff['tariff_speed'].'</p></li>'.
+            '<li><p class="tariff_info">'."стоимость - ".$tariff['tariff_price'].'</p></li>'.
+            '<li><button class="edit_btn"><a href="edit.php?'.$tariff['id'].'">Изменить</a></button></li>'.
+            '<li><button class="edit_btn"><a href="delete.php?'.$tariff['id'].'">Удалить</a></button></li>'.
             '</ul>'.
         '</div>';
         }?>

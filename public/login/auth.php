@@ -22,6 +22,8 @@ if (!empty($_POST['login']) && !empty($_POST['password']))
 
         $_SESSION['id_user']=$result['id'];
         $_SESSION['role']=$result['role'];
+        $_SESSION['auth']=1;
+        $_SESSION['user_data']=$result;
     }
 }
 header('location:account.php');

@@ -79,26 +79,5 @@
                 <li class="nav_link"><a href="account.php">Аккаунт</a></li>
             </ul>
         </nav>
-
-
-        <?php
-        session_start();
-        $connect = new PDO('mysql:host=mysql-8.0;dbname=Communication_services','root','');
-
-
-        $stm = $connect->query('SELECT * FROM `users`');
-        $users = $stm->fetchAll();
-        foreach($users as $user)
-        {
-        echo
-        '<div class="show_users">'.
-            '<p class="users_info">'."Логин - ".$user['login'].'</p>'.
-            '<p class="users_info">'."Логин - ".$user['name'].'</p>'.
-            '<p class="users_info">'."Логин - ".$user['surname'].'</p>'.
-            '<p class="users_info">'."Логин - ".$user['phone_number'].'</p>'.
-            '<button class="edit_btn"><a href="edit.php?'.$_SESSION['user_id']=$user['id'].'">Изменить</a></button>'.
-            '<button class="edit_btn"><a href="delete.php?'.$_SESSION['user_id']=$user['id'].'">Удалить</a></button>'.
-        '</div>';
-        }?>
 </body>
 </html>

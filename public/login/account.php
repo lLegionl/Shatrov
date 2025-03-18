@@ -1,3 +1,4 @@
+<?php session_start();?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -78,6 +79,58 @@
     .edit_btn a {
         text-decoration: none;
         color: white;
+        padding: 10px;
+    }
+    .account_menu {
+        display: flex;
+        justify-content: space-between;
+        flex-direction: column;
+        padding-inline-start: 0px;
+        margin-left: 50px;
+        margin-top: 20px;
+        padding: 0px;
+    }
+    .menu_link {
+        list-style-type: none;
+        font-size: 18px;
+        background-color: green;
+    }
+    .account_menu a {
+        display: flex;
+        justify-content: center;
+        color: white;
+        text-decoration: none;
+        padding: 10px;
+    }
+    .account {
+        display: flex;
+        justify-content: space-between;
+        margin-right:150px;
+        margin-left:150px;
+        background-color: antiquewhite;
+        border-radius: 20px;
+    }
+    .slide1 {
+        display: inline-block;   
+    }
+    .slide1 li {
+        margin: 10px;
+        display: flex;
+    }
+    .slide1 ul {
+        display: flex;
+        justify-content: space-between;
+        flex-direction: column;
+        padding-inline-start: 0px;
+        max-width: 500px;
+        margin-right: 50px;
+        margin-top: 20px;
+    }
+    .slide1 h4 {
+        display: flex;
+        justify-content: center;
+        margin: auto;
+        margin-left: 10px;
     }
 
 </style>
@@ -87,12 +140,12 @@
                 <li class="nav_link"><a href="main.php">Главная</a></li>
                 <li class="nav_link"><a href="tariffs.php">Тарифы</a></li>
                 <li class="nav_link"><a href="account.php">Аккаунт</a></li>
-                <?php session_start(); if (isset($_SESSION['role']) && ($_SESSION['role']==1)) { echo
+                <?php if (1==1) { echo
                 '<li class="nav_link"><a href="admin.php">Админ панель</a></li>';}?>
             </ul>
         </nav>
-
-                <h1>Авторизация</h1>
+                    <?php var_dump($_SESSION); if (!isset($_SESSION['auth']))  { echo
+                '<h1>Авторизация</h1>
         <div class="input_login">
             <form action="auth.php" method="POST">            
                 <ul class="input_wrapper">
@@ -106,7 +159,6 @@
             </ul>
             </form>
         </div>
-
 
             <h1>Регистрация</h1>
 
@@ -126,6 +178,37 @@
                 <li><input class="edit_btn" type="submit" value="send"></li>
             </ul>
             </form>
-        </div>
+        </div>';
+                } else {?>
+
+            <h1>Ваш аккаунт</h1>
+                <div class="account">
+
+                <ul class="account_menu">
+                    <li class="menu_link"><a href="account.php?slide=<?=1?>">личные данные</a></li>
+                    <li class="menu_link"><a href="account.php?slide=<?=2?>">услуги</a></li>
+                    <li class="menu_link"><a href="account.php?slide=<?=3?>">Подключенные услуги</a></li>
+                </ul>
+
+                <?php 
+                switch ($_GET['slide']) {
+                    case 1:
+                        echo  
+                        '<div class="slide1">
+                        <ul class="slide1_ul">
+                            <li><input type="text" class="input_style" value="'.$_SESSION['user_data']['login'].'"><h4>Логин</h4></li>
+                            <li><input type="text" class="input_style" value="'.$_SESSION['user_data']['name'].'"><h4>Имя</h4></li>
+                            <li><input type="text" class="input_style" value="'.$_SESSION['user_data']['surname'].'"><h4>Фамилия</h4></li>
+                            <li><input type="text" class="input_style" value="'.$_SESSION['user_data']['phone_number'].'"><h4>Номер телефона</h4></li>
+                            <li><button class="edit_btn"><a href="edit.php">edit</a></button>
+                            <button class="edit_btn"><a href="logout.php">exit</a></button></li>
+                        </ul>
+                        </div>';
+                }
+                ?>
+
+                </div>
+
+        <?php }?>
 </body>
 </html>
