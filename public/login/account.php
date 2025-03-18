@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>авторизация</title>
+    <title>Document</title>
 </head>
 <style>
     .nav_bar {
@@ -32,9 +32,18 @@
         display: flex;
         justify-content: center;
     }
+    .input_reg {
+        position: relative;
+        margin: auto;
+        width: 500px;
+        min-height: 350px;
+        background-color: antiquewhite;
+        border-radius: 20px;
+        display: flex;
+        justify-content: center;
+    }
     .input_wrapper {
         list-style-type: none; 
-        padding: 0px;
     }
     .input_style {
         width: 240px;
@@ -58,6 +67,7 @@
         padding-left: 10px;
     }
     .edit_btn {
+        position: relative;
         background-color: brown;
         margin: 10px;
         min-width: 70px;
@@ -68,8 +78,8 @@
     .edit_btn a {
         text-decoration: none;
         color: white;
-    
     }
+
 </style>
 <body>
         <nav class="nav_bar">
@@ -82,49 +92,40 @@
             </ul>
         </nav>
 
-            <h1>Редактирование</h1>
-        <?php 
-                session_start();
-                if (isset($_GET['id']) && !empty($_GET['id']))
-                {
-                    $id=$_GET['id'];
-                } else { $id=$_SESSION['id_user'];} 
-                
-                $host = 'MySQL-8.0';
-                $user = 'root';
-                $pass = '';
-                $name = 'Communication_services';
-
-                $link = mysqli_connect($host,$user,$pass,$name) ;
-
-                $quary = "SELECT * FROM users WHERE id='$id'";
-
-                $result = mysqli_query($link,$quary) or die(mysqli_error($link));
-
-                $result = mysqli_fetch_assoc($result);
-
-
-        ?>
+                <h1>Авторизация</h1>
         <div class="input_login">
-            <form action="auth_edit.php" method="POST">            
-            <ul class="input_wrapper">
+            <form action="auth.php" method="POST">            
+                <ul class="input_wrapper">
                 Login
-                <li><input type="text" class="input_style" name="login" value="<?php echo $result['login'];?>"></li>
-                Name
-                <li><input type="text" class="input_style" name="name" value="<?php echo $result['name'];?>"></li>
-                Surname
-                <li><input type="text" class="input_style" name="surname" value="<?php echo $result['surname'];?>"></li>
-                phone_number
-                <li><input type="text" class="input_style" name="phone" value="<?php echo $result['phone_number'];?>"></li>
+                <li><input type="text" class="input_style" name="login"></li>
                 password
-                <li><input type="text" class="input_style" name="password" value="<?php echo $result['password'];?>"></li>
-                <li><input type="submit" value="send" class="input_style"></li>
-                <button class="edit_btn"><a href="delete.php">delete</a></button>
-            </ul>
+                <li><input type="text" class="input_style" name="password"></li>
+                <li><input type="submit" value="send" class="edit_btn">
+                <button class="edit_btn"><a href="edit.php">edit</a></button>
+                <button class="edit_btn"><a href="logout.php">exit</a></button></li>
             </ul>
             </form>
         </div>
 
 
+            <h1>Регистрация</h1>
+
+        <div class="input_reg">
+            <form action="registration.php" method="POST">            
+                <ul class="input_wrapper">
+                Login
+                <li><input type="text" class="input_style" name="login"></li>
+                Name
+                <li><input type="text" class="input_style" name="name"></li>
+                Surname
+                <li><input type="text" class="input_style" name="surname"></li>
+                phone_number
+                <li><input type="text" class="input_style" name="phone"></li>
+                password
+                <li><input type="text" class="input_style" name="password"></li>
+                <li><input class="edit_btn" type="submit" value="send"></li>
+            </ul>
+            </form>
+        </div>
 </body>
 </html>

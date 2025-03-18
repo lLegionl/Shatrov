@@ -44,7 +44,7 @@
         display: flex;
         justify-content: center;
     }
-    .show_users {
+    .show_tariff {
         position: relative;
         display: inline-block;
         background-color: antiquewhite;
@@ -53,7 +53,15 @@
         border-radius: 20px;
         
     }
-    .users_info {
+    .show_tariff {
+        padding: 20px;
+    }
+    .show_tariff li,ul {
+        list-style-type: none;
+        padding: 0px;
+
+    }
+    .tariff_info {
         padding-left: 10px;
     }
     .edit_btn {
@@ -74,9 +82,10 @@
         <nav class="nav_bar">
             <ul class="nav_list">
                 <li class="nav_link"><a href="main.php">Главная</a></li>
-                <li class="nav_link"><a href="login.php"></a></li>
-                <li class="nav_link"><a href=""></a></li>
+                <li class="nav_link"><a href="tariffs.php">Тарифы</a></li>
                 <li class="nav_link"><a href="account.php">Аккаунт</a></li>
+                <?php session_start(); if (isset($_SESSION['role']) && ($_SESSION['role']==1)) { echo
+                '<li class="nav_link"><a href="admin.php">Админ панель</a></li>';}?>
             </ul>
         </nav>
 
@@ -86,18 +95,19 @@
         $connect = new PDO('mysql:host=mysql-8.0;dbname=Communication_services','root','');
 
 
-        $stm = $connect->query('SELECT * FROM `users`');
-        $users = $stm->fetchAll();
-        foreach($users as $user)
+        $stm = $connect->query('SELECT * FROM `tariff`');
+        $tariffs = $stm->fetchAll();
+        foreach($tariffs as $tarif)
         {
         echo
-        '<div class="show_users">'.
-            '<p class="users_info">'."Логин - ".$user['login'].'</p>'.
-            '<p class="users_info">'."Логин - ".$user['name'].'</p>'.
-            '<p class="users_info">'."Логин - ".$user['surname'].'</p>'.
-            '<p class="users_info">'."Логин - ".$user['phone_number'].'</p>'.
-            '<button class="edit_btn"><a href="edit.php?'.$_SESSION['user_id']=$user['id'].'">Изменить</a></button>'.
-            '<button class="edit_btn"><a href="delete.php?'.$_SESSION['user_id']=$user['id'].'">Удалить</a></button>'.
+        '<div class="show_tariff">'.
+            '<ul>'.
+            '<li><p class="tariff_info">'."Название - ".$tarif['tariff_name'].'</p></li>'.
+            '<li><p class="tariff_info">'."скорость - ".$tarif['tariff_speed'].'</p></li>'.
+            '<li><p class="tariff_info">'."стоимость - ".$tarif['tariff_price'].'</p></li>'.
+            '<li><button class="edit_btn"><a href="edit.php?'.$tarif['id'].'">Изменить</a></button></li>'.
+            '<li><button class="edit_btn"><a href="delete.php?'.$tarif['id'].'">Удалить</a></button></li>'.
+            '</ul>'.
         '</div>';
         }?>
 </body>
