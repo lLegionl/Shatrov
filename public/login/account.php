@@ -1,4 +1,6 @@
-<?php session_start();?>
+<?php   session_start();
+        include "db.php";        
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -204,6 +206,16 @@
                             <button class="edit_btn"><a href="logout.php">exit</a></button></li>
                         </ul>
                         </div>';
+                        case 2: 
+                            foreach ($result as $tarif)
+                            {   echo
+                                '<div class="tarif_block">
+                                <h2>'.$tarif['tariff_name'].'</h2>
+                                <h3>'.$tarif['tariff_speed'].'mb/s</h3>
+                                <h3>'.$tarif['tariff_price'].'юруб</h3>
+                                </div>';
+                            };
+                        
                 }
                 ?>
 

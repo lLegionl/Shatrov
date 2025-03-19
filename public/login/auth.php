@@ -26,5 +26,5 @@ if (!empty($_POST['login']) && !empty($_POST['password']))
         $_SESSION['user_data']=$result;
     }
 }
-header('location:account.php');
+header('location:account.php?slide=1');
 ?> 
