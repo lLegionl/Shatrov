@@ -84,6 +84,7 @@
         padding: 10px;
     }
     .account_menu {
+        position: relative;
         display: flex;
         justify-content: space-between;
         flex-direction: column;
@@ -133,8 +134,29 @@
         justify-content: center;
         margin: auto;
         margin-left: 10px;
-    }
+        }
+        .btn_select {
+            border-radius: 10px;
+            border-color: green;
+        }
+        .btn_select a {
+            color: green;
+            text-decoration: none;
+            font-size: 16px;
+            margin: 5px;
+        }
+        .tariff_block {
+            display: flex;
+            flex-direction: column;
+            margin-left: 20px;
+        }
+        .tariff_wrapper {
+            position: relative;
+            display: flex;
+            
+            margin-right: 50px;
 
+        }
 </style>
 <body>
         <nav class="nav_bar">
@@ -207,15 +229,19 @@
                         </ul>
                         </div>';
                         case 2: 
-                            foreach ($result as $tarif)
+                            $stm = $connect->query('SELECT * FROM `tariff`');
+                            $tariffs = $stm->fetchAll();
+                            echo '<div class="tariff_wrapper">'  ;                  
+                            foreach ($tariffs as $tarif)
                             {   echo
-                                '<div class="tarif_block">
+                                '
+                                <div class="tariff_block">
                                 <h2>'.$tarif['tariff_name'].'</h2>
                                 <h3>'.$tarif['tariff_speed'].'mb/s</h3>
-                                <h3>'.$tarif['tariff_price'].'юруб</h3>
+                                <h3>'.$tarif['tariff_price'].'.руб</h3>
+                                <button class="btn_select"><a href="">Выбрать</a></button>
                                 </div>';
-                            };
-                        
+                            } echo '</div>';
                 }
                 ?>
 

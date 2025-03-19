@@ -1,3 +1,4 @@
+<?php include "db.php";?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -92,9 +93,6 @@
 
         <?php
         session_start();
-        $connect = new PDO('mysql:host=mysql-8.0;dbname=Communication_services','root','');
-
-
         $stm = $connect->query('SELECT * FROM `tariff`');
         $tariffs = $stm->fetchAll();
         foreach($tariffs as $tarif)

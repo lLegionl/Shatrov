@@ -1,3 +1,4 @@
+<?php include "db.php"; ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -91,9 +92,6 @@
         <h1>Редактирование пользователей</h1>
         <?php
         session_start();
-        $connect = new PDO('mysql:host=mysql-8.0;dbname=Communication_services','root','');
-
-
         $stm = $connect->query('SELECT * FROM `users`');
         $users = $stm->fetchAll();
         foreach($users as $user)
@@ -111,9 +109,6 @@
                     <h1>Редактирование тарифов</h1>
         <?php
         session_start();
-        $connect = new PDO('mysql:host=mysql-8.0;dbname=Communication_services','root','');
-
-
         $stm = $connect->query('SELECT * FROM `tariff`');
         $tariffs = $stm->fetchAll();
         foreach($tariffs as $tariff)
