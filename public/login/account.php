@@ -155,7 +155,8 @@
         }
     .account {
         display: flex;
-        justify-content: space-between;
+        justify-content: space-around;
+        flex-wrap: wrap;
         margin-right:150px;
         margin-left:150px;
         background-color: antiquewhite;
@@ -173,7 +174,6 @@
     }
     .slide1 {
         display: inline-block;   
-        
     }
     .slide1 li {
         margin: 10px;
@@ -216,6 +216,27 @@
             margin-right: 50px;
 
         }
+        .info-container {
+            display: flex;
+            flex-direction: column; /* Выравниваем поля по вертикали */
+            width: 300px; /* Ширина контейнера */
+            margin: 20px; /* Центрирование по горизонтали */
+            padding: 20px;
+            border-radius: 5px;
+            background-color: #f5f5f5; /* Светло-серый фон */
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Тень */
+        }
+        .info-field {
+            margin-bottom: 10px; /* Отступ между полями */
+        }
+        .info-label {
+            font-weight: bold;
+            margin-bottom: 5px; /* Отступ перед значением */
+        }
+        .info-value {
+            color: #333; /* Темно-серый цвет значения */
+        }
+
 </style>
 <body>
 <nav class="nav_bar">
@@ -239,7 +260,7 @@
                 <li><input type="text" class="input_style" name="password"></li>
                 <li class="li_btn"><input type="submit" value="send" class="edit_btn">
                 <button class="edit_btn"><a href="edit.php">edit</a></button>
-                <button class="edit_btn"><a href="logout.php">exit</a></button></li>
+                </li>
             </ul>
             </form>
         </div>
@@ -269,7 +290,7 @@
                 } else {?>
 
             <h1>Ваш аккаунт</h1>
-            <div class="block_wrapper">
+            <div class="block_wrapper"></div>
                 <div class="account">
                     
 
@@ -312,11 +333,34 @@
                             } echo '</div>';
                             break;
                         case 3:
+                            $id_of_user=$_SESSION['id_user'];
+                            $stm = $connect->query("SELECT services.*, tariff.tariff_name
+                            FROM services
+                            JOIN tariff ON services.tariff_id = tariff.id
+                            WHERE services.user_id = $id_of_user");
+                            $result = $stm->fetch();
+ 
+                                echo '<div class="info-container">
+                                <div class="info-field">
+                                    <span class="info-label">Тариф:</span>
+                                    <span class="info-value">'.$result['tariff_name'].'</span>
+                                </div>
+                                <div class="info-field">
+                                    <span class="info-label">Аддрес:</span>
+                                    <span class="info-value">'.$result['addres'].'</span>
+                                </div>
+                                <div class="info-field">
+                                    <span class="info-label">Начало:</span>
+                                    <span class="info-value">'.$result['tariff_start'].'</span>
+                                </div>
+                                <div class="info-field">
+                                    <span class="info-label">Окончание:</span>
+                                    <span class="info-value">'.$result['tariff_end'].'</span>
+                                </div>
+                            </div>';
+                            
                             echo '<a href="choose_tariff.php">у вас нету подключенных тарифов</a>' ;
 
-                            if (isset($_SESSION['user_data']['tariff']))
-                            {
-                            }
                         break;
                         
                 }

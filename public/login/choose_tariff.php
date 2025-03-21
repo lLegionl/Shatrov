@@ -10,22 +10,39 @@ include "db.php";
     <title>Document</title>
 </head>
 <style>
-    .nav_bar {
-        background-color: green;
-    }
-    .nav_list {
+        /* Общие стили */
+        body {
+        font-family: sans-serif;
+        margin: 0;
+        background-color: #f4f4f4;
+        }
+        h1 {
+        text-align: center;
+        margin-top: 20px;
+        color: #333;
+        }
+        /* Навигационная панель */
+        .nav_bar {
+        background-color: green; /* Синий цвет */
+        color: #fff;
+        padding: 10px 0;
+        }
+        .nav_list {
         display: flex;
-        align-items: center;
         justify-content: center;
-    }
-    .nav_link {
-        list-style-type: none;
-        margin: 20px;
-    }
-    .nav_link a {
+        list-style: none;
+        max-width: 1600px; /* Максимальная ширина контейнера 1200 пикселей */
+        margin: auto; /* Центрирование по горизонтали */
+        padding: 20px; /* Отступ 20 пикселей со всех сторон */
+        }
+        .nav_link {
+        margin: 0 15px;
+        }
+        .nav_link a {
         text-decoration: none;
-        color: azure;
-    }
+        color: #fff;
+        font-weight: bold;
+        }
     .input_choose {
         position: relative;
         margin: auto;
@@ -98,10 +115,11 @@ include "db.php";
                 '<li class="nav_link"><a href="admin.php">Админ панель</a></li>';}?>
             </ul>
         </nav>
-
+        <h1>Подключение тарифа</h1>
+        <form action="tariff_claim.php" method="POST">
         <div class="tariff-selection">
             <label for="tariff-type">Тариф:</label>
-            <select id="tariff-type">
+            <select id="tariff-type" name="tariff_select">
             <?php
                     $stm = $connect->query('SELECT * FROM `tariff`');
                     $tariffs = $stm->fetchAll();                    
@@ -112,8 +130,9 @@ include "db.php";
                     ?>
             </select>
             <label for="tariff-name">Адресс подключение:</label>
-            <input type="text" id="tariff-name" placeholder="Введите адрес">
+            <input type="text" id="tariff-name" name="addres" placeholder="Введите адрес">
             <button type="submit">Отправить</button>
+            </form>
     </div>
 
         
