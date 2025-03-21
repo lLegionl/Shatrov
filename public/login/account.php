@@ -217,6 +217,7 @@
                 <?php 
                 switch ($_GET['slide']) {
                     case 1:
+                        
                         echo  
                         '<div class="slide1">
                         <ul class="slide1_ul">
@@ -228,7 +229,9 @@
                             <button class="edit_btn"><a href="logout.php">exit</a></button></li>
                         </ul>
                         </div>';
+                        break;
                         case 2: 
+                            
                             $stm = $connect->query('SELECT * FROM `tariff`');
                             $tariffs = $stm->fetchAll();
                             echo '<div class="tariff_wrapper">'  ;                  
@@ -239,9 +242,17 @@
                                 <h2>'.$tarif['tariff_name'].'</h2>
                                 <h3>'.$tarif['tariff_speed'].'mb/s</h3>
                                 <h3>'.$tarif['tariff_price'].'.руб</h3>
-                                <button class="btn_select"><a href="">Выбрать</a></button>
+                                <button class="btn_select"><a href="choose_tariff.php?tariff='.$tarif['id'].'">Выбрать</a></button>
                                 </div>';
                             } echo '</div>';
+                            break;
+                        case 3:
+                            if (isset($_SESSION['user_data']['tariff']))
+                            {
+                                echo '' ;
+                            }
+                        break;
+                        
                 }
                 ?>
 
