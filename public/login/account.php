@@ -247,9 +247,10 @@
                             } echo '</div>';
                             break;
                         case 3:
+                            echo '<a href="choose_tariff.php">у вас нету подключенных тарифов</a>' ;
+
                             if (isset($_SESSION['user_data']['tariff']))
                             {
-                                echo '' ;
                             }
                         break;
                         

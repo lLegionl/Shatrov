@@ -88,8 +88,15 @@ include "db.php";
                 <ul class="input_wrapper">
                 Tariff
                 <li>
-                <select name="" id="">
-                    
+                <select name="tariff_choose" id="">
+                    <?php
+                    $stm = $connect->query('SELECT * FROM `tariff`');
+                    $tariffs = $stm->fetchAll();                    
+                    foreach ($tariffs as $tarif)
+                    {
+                        echo '<option value="'.$tarif['id'].'">'.$tarif['tariff_name'].'</option>';
+                    }
+                    ?>
                 </select></li>
                 Name
                 <li><input type="text" class="input_style" name="name"></li>
