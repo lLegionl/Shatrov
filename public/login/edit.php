@@ -1,3 +1,7 @@
+<?php
+include "db.php";
+session_start();
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -72,12 +76,12 @@
     }
 </style>
 <body>
-        <nav class="nav_bar">
+<nav class="nav_bar">
             <ul class="nav_list">
                 <li class="nav_link"><a href="main.php">Главная</a></li>
                 <li class="nav_link"><a href="tariffs.php">Тарифы</a></li>
-                <li class="nav_link"><a href="account.php">Аккаунт</a></li>
-                <?php session_start(); if (isset($_SESSION['role']) && ($_SESSION['role']==1)) { echo
+                <li class="nav_link"><a href="<?php if (isset($_SESSION['auth'])) {echo 'account.php?slide=1';} else echo 'account.php'; ?>">Аккаунт</a></li>
+                <?php if (isset($_SESSION['role']) && $_SESSION['role']==1) { echo
                 '<li class="nav_link"><a href="admin.php">Админ панель</a></li>';}?>
             </ul>
         </nav>
@@ -85,28 +89,14 @@
             <h1>Редактирование</h1>
         <?php 
                 session_start();
-                if (isset($_GET['id']) && !empty($_GET['id']))
-                {
-                    $id=$_GET['id'];
-                } else { $id=$_SESSION['id_user'];} 
-                
-                $host = 'MySQL-8.0';
-                $user = 'root';
-                $pass = '';
-                $name = 'Communication_services';
-
-                $link = mysqli_connect($host,$user,$pass,$name) ;
-
-                $quary = "SELECT * FROM users WHERE id='$id'";
-
-                $result = mysqli_query($link,$quary) or die(mysqli_error($link));
-
-                $result = mysqli_fetch_assoc($result);
-
+                $id=$_GET['id'];
+                $stm = $connect->query("SELECT * FROM users WHERE id='$id'");
+                $result = $stm->fetch();
+            
 
         ?>
         <div class="input_login">
-            <form action="auth_edit.php" method="POST">            
+            <form action="auth_edit.php?id=<?=$_GET['id']?>" method="POST">            
             <ul class="input_wrapper">
                 Login
                 <li><input type="text" class="input_style" name="login" value="<?php echo $result['login'];?>"></li>

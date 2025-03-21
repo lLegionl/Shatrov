@@ -1,6 +1,5 @@
 <?php 
-
-$connect = new PDO('mysql:host=mysql-8.0;dbname=Communication_services','root','');
+    include "db.php";
 
 if (!empty($_POST['login']) && !empty($_POST['name']) && !empty($_POST['surname']) && !empty($_POST['phone']) && !empty($_POST['password']))
 {

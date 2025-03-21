@@ -1,21 +1,13 @@
 <?php 
-$host = 'MySQL-8.0';
-$user = 'root';
-$pass = '';
-$name = 'Communication_services';
+include "db.php";
 session_start();
 if (!empty($_POST['login']) && !empty($_POST['password']))
 {
     $login = $_POST['login'];
     $password = $_POST['password'];
 
-    $link = mysqli_connect($host,$user,$pass,$name) ;
-
-    $quary = "SELECT * FROM users WHERE login='$login'";
-
-    $result = mysqli_query($link,$quary) or die(mysqli_error($link));
-
-    $result = mysqli_fetch_assoc($result);
+    $stm = $connect->query("SELECT * FROM users WHERE login='$login'");
+    $result = $stm->fetch();
 
     if ($result['password']==$password)
     {

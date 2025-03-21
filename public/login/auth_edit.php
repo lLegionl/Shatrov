@@ -1,13 +1,9 @@
 <?php 
-$host = 'MySQL-8.0';
-$user = 'root';
-$pass = '';
-$name = 'Communication_services';
-
+include "db.php";
 if (!empty($_POST['login']) && !empty($_POST['password']) && !empty($_POST['name']) && !empty($_POST['surname']) && !empty($_POST['phone']))
 {   
     session_start();
-    $id=$_SESSION['id_user'];
+    $id=$_GET['id'];
     var_dump($_SESSION);
     $login = $_POST['login'];
     $password = $_POST['password'];
@@ -15,9 +11,8 @@ if (!empty($_POST['login']) && !empty($_POST['password']) && !empty($_POST['name
     $nameUser = $_POST['name'];
     $surname = $_POST['surname'];
 
-    $link = mysqli_connect($host,$user,$pass,$name) ;
-
-    $quary = "UPDATE
+    $stm = $connect->query(
+    "UPDATE
     users
     SET
     login = '$login',
@@ -26,12 +21,12 @@ if (!empty($_POST['login']) && !empty($_POST['password']) && !empty($_POST['name
     phone_number = '$phone_number',
     password = '$password'
     WHERE
-    id='$id'";
-
-    $result = mysqli_query($link,$quary) or die(mysqli_error($link));
-
-
+    id='$id'"
+    );
+    $result = $stm->fetch();
+    header('location:account.php?slide=1');
+    
 }
-header('location:login.php')
+else {header('location:account.php');}
 
 ?> 

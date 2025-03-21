@@ -9,24 +9,48 @@
     <title>Document</title>
 </head>
 <style>
-    .nav_bar {
-        background-color: green;
-    }
-    .nav_list {
+        /* Общие стили */
+        body {
+        font-family: sans-serif;
+        margin: 0;
+        background-color: #f4f4f4;
+        }
+        h1 {
+        text-align: center;
+        margin-top: 20px;
+        color: #333;
+        }
+        /* Навигационная панель */
+        .nav_bar {
+        background-color: green; /* Синий цвет */
+        color: #fff;
+        padding: 10px 0;
+        }
+        .nav_list {
         display: flex;
-        align-items: center;
         justify-content: center;
-    }
-    .nav_link {
-        list-style-type: none;
-        margin: 20px;
-    }
-    .nav_link a {
+        list-style: none;
+        max-width: 1600px; /* Максимальная ширина контейнера 1200 пикселей */
+        margin: auto; /* Центрирование по горизонтали */
+        padding: 20px; /* Отступ 20 пикселей со всех сторон */
+        }
+        .nav_link {
+        margin: 0 15px;
+        }
+        .nav_link a {
         text-decoration: none;
-        color: azure;
-    }
+        color: #fff;
+        font-weight: bold;
+        }
+        .block_wrapper {
+            display: flex;
+            flex-wrap: wrap; /* Разрешаем перенос элементов на новую строку */
+            justify-content: center; /* Распределяем элементы равномерно */
+            max-width: 1600px; /* Максимальная ширина контейнера 1200 пикселей */
+            margin: auto; /* Центрирование по горизонтали */
+            padding: 20px; /* Отступ 20 пикселей со всех сторон */
+        }
     .input_login {
-        position: relative;
         margin: auto;
         width: 500px;
         min-height: 150px;
@@ -34,9 +58,15 @@
         border-radius: 20px;
         display: flex;
         justify-content: center;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        margin: 10px; /* Добавляем отступ */
+        background-color: #fff;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        padding: 20px;
+
     }
     .input_reg {
-        position: relative;
         margin: auto;
         width: 500px;
         min-height: 350px;
@@ -44,7 +74,14 @@
         border-radius: 20px;
         display: flex;
         justify-content: center;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        margin: 10px; /* Добавляем отступ */
+        background-color: #fff;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        padding: 20px;
     }
+
     .input_wrapper {
         list-style-type: none; 
     }
@@ -52,59 +89,70 @@
         width: 240px;
         height: 20px;
         margin: 10px;
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 3px;
+        box-sizing: border-box;
+        margin-bottom: 10px;
     }
     h1 {
         display: flex;
         justify-content: center;
     }
-    .show_users {
-        position: relative;
-        display: inline-block;
-        background-color: antiquewhite;
-        min-width: 150px;
-        margin: 20px;
-        border-radius: 20px;
-        
-    }
     .users_info {
         padding-left: 10px;
     }
-    .edit_btn {
-        position: relative;
-        background-color: brown;
+        /* Кнопки */
+        .edit_btn {
+        background-color: green; /* Синий цвет */
+        color: #fff;
+        border: none;
+        padding: 10px 20px;
         margin: 10px;
-        min-width: 70px;
-        height: 40px;
-        border-radius: 30px;
-        color: white;
-    }
-    .edit_btn a {
+        border-radius: 3px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+        }
+
+        .edit_btn:hover {
+        background-color: darkgreen; /* Более темный синий при наведении */
+        }
+
+        .edit_btn a {
         text-decoration: none;
-        color: white;
-        padding: 10px;
-    }
+        color: #fff;
+        }
+        .li_btn
+        {
+            display: flex;
+            justify-content: center;
+        }
     .account_menu {
-        position: relative;
-        display: flex;
-        justify-content: space-between;
+        list-style: none;
+        padding: 0;
+        margin: 0;
+        display: flex; /* Используем flexbox для выравнивания элементов */
         flex-direction: column;
-        padding-inline-start: 0px;
-        margin-left: 50px;
-        margin-top: 20px;
-        padding: 0px;
-    }
+        justify-content: space-around; /* Распределяем элементы равномерно */
+        background-color: green; /* Светло-серый фон */
+        padding: 10px; /* Отступ 10 пикселей */
+        border-radius: 5px; /* Скругленные углы */
+        }
+
     .menu_link {
-        list-style-type: none;
-        font-size: 18px;
-        background-color: green;
-    }
-    .account_menu a {
-        display: flex;
-        justify-content: center;
-        color: white;
+        margin: 0 10px; /* Отступ между элементами */
+        }
+
+    .menu_link a {
         text-decoration: none;
-        padding: 10px;
-    }
+        color: white; /* Темно-серый цвет текста */
+        font-weight: bold; /* Жирный шрифт */
+        font-size: 20px;
+        }
+
+    .menu_link a:hover {
+        text-decoration: underline; /* Подчеркивание при наведении */
+        }
     .account {
         display: flex;
         justify-content: space-between;
@@ -112,9 +160,20 @@
         margin-left:150px;
         background-color: antiquewhite;
         border-radius: 20px;
+        
+        min-height: 150px;
+        border-radius: 20px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        margin: 10px; /* Добавляем отступ */
+        background-color: #fff;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        padding: 20px;
+
     }
     .slide1 {
         display: inline-block;   
+        
     }
     .slide1 li {
         margin: 10px;
@@ -159,17 +218,18 @@
         }
 </style>
 <body>
-        <nav class="nav_bar">
+<nav class="nav_bar">
             <ul class="nav_list">
                 <li class="nav_link"><a href="main.php">Главная</a></li>
                 <li class="nav_link"><a href="tariffs.php">Тарифы</a></li>
-                <li class="nav_link"><a href="account.php">Аккаунт</a></li>
-                <?php if (1==1) { echo
+                <li class="nav_link"><a href="<?php if (isset($_SESSION['auth'])) {echo 'account.php?slide=1';} else echo 'account.php'; ?>">Аккаунт</a></li>
+                <?php if (isset($_SESSION['role']) && $_SESSION['role']==1) { echo
                 '<li class="nav_link"><a href="admin.php">Админ панель</a></li>';}?>
             </ul>
         </nav>
                     <?php var_dump($_SESSION); if (!isset($_SESSION['auth']))  { echo
                 '<h1>Авторизация</h1>
+    <div class="block_wrapper">            
         <div class="input_login">
             <form action="auth.php" method="POST">            
                 <ul class="input_wrapper">
@@ -177,15 +237,16 @@
                 <li><input type="text" class="input_style" name="login"></li>
                 password
                 <li><input type="text" class="input_style" name="password"></li>
-                <li><input type="submit" value="send" class="edit_btn">
+                <li class="li_btn"><input type="submit" value="send" class="edit_btn">
                 <button class="edit_btn"><a href="edit.php">edit</a></button>
                 <button class="edit_btn"><a href="logout.php">exit</a></button></li>
             </ul>
             </form>
         </div>
+    </div>
 
             <h1>Регистрация</h1>
-
+    <div class="block_wrapper">            
         <div class="input_reg">
             <form action="registration.php" method="POST">            
                 <ul class="input_wrapper">
@@ -202,11 +263,15 @@
                 <li><input class="edit_btn" type="submit" value="send"></li>
             </ul>
             </form>
-        </div>';
+        </div>
+    </div>';
+    
                 } else {?>
 
             <h1>Ваш аккаунт</h1>
+            <div class="block_wrapper">
                 <div class="account">
+                    
 
                 <ul class="account_menu">
                     <li class="menu_link"><a href="account.php?slide=<?=1?>">личные данные</a></li>
@@ -225,7 +290,7 @@
                             <li><input type="text" class="input_style" value="'.$_SESSION['user_data']['name'].'"><h4>Имя</h4></li>
                             <li><input type="text" class="input_style" value="'.$_SESSION['user_data']['surname'].'"><h4>Фамилия</h4></li>
                             <li><input type="text" class="input_style" value="'.$_SESSION['user_data']['phone_number'].'"><h4>Номер телефона</h4></li>
-                            <li><button class="edit_btn"><a href="edit.php">edit</a></button>
+                            <li><button class="edit_btn"><a href="edit.php?id='.$_SESSION['user_data']['id'].'">edit</a></button>
                             <button class="edit_btn"><a href="logout.php">exit</a></button></li>
                         </ul>
                         </div>';
@@ -257,6 +322,7 @@
                 }
                 ?>
 
+                </div>
                 </div>
 
         <?php }?>

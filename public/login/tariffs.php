@@ -7,22 +7,39 @@
     <title>Document</title>
 </head>
 <style>
-    .nav_bar {
-        background-color: green;
-    }
-    .nav_list {
+        /* Общие стили */
+        body {
+        font-family: sans-serif;
+        margin: 0;
+        background-color: #f4f4f4;
+        }
+        h1 {
+        text-align: center;
+        margin-top: 20px;
+        color: #333;
+        }
+        /* Навигационная панель */
+        .nav_bar {
+        background-color: green; /* Синий цвет */
+        color: #fff;
+        padding: 10px 0;
+        }
+        .nav_list {
         display: flex;
-        align-items: center;
         justify-content: center;
-    }
-    .nav_link {
-        list-style-type: none;
-        margin: 20px;
-    }
-    .nav_link a {
+        list-style: none;
+        max-width: 1600px; /* Максимальная ширина контейнера 1200 пикселей */
+        margin: auto; /* Центрирование по горизонтали */
+        padding: 20px; /* Отступ 20 пикселей со всех сторон */
+        }
+        .nav_link {
+        margin: 0 15px;
+        }
+        .nav_link a {
         text-decoration: none;
-        color: azure;
-    }
+        color: #fff;
+        font-weight: bold;
+        }
     .input_reg {
         position: relative;
         margin: auto;
