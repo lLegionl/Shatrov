@@ -1,183 +1,194 @@
-<?php include "db.php"; 
-session_start()?>
+<?php session_start();
+include "db.php";
+include "header.php";?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Админ панель - ЛК-Телеком</title>
 </head>
 <style>
         /* Общие стили */
         body {
-        font-family: sans-serif;
-        margin: 0;
-        background-color: #f4f4f4;
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f5f5f5;
+            color: #333;
         }
         h1 {
-        text-align: center;
-        margin-top: 20px;
-        color: #333;
+            text-align: center;
+            margin: 30px 0;
+            color: #2e7d32; /* Темно-зеленый */
+            font-size: 32px;
         }
-        /* Навигационная панель */
-        .nav_bar {
-        background-color: green; /* Синий цвет */
-        color: #fff;
-        padding: 10px 0;
-        }
-        .nav_list {
-        display: flex;
-        justify-content: center;
-        list-style: none;
-        max-width: 1600px; /* Максимальная ширина контейнера 1200 пикселей */
-        margin: auto; /* Центрирование по горизонтали */
-        padding: 20px; /* Отступ 20 пикселей со всех сторон */
-        }
-        .nav_link {
-        margin: 0 15px;
-        }
-        .nav_link a {
-        text-decoration: none;
-        color: #fff;
-        font-weight: bold;
-        }
-        /* Блок регистрации */
-        .input_reg {
-        border: 1px solid #ccc;
-        padding: 20px;
-        border-radius: 5px;
-        width: 300px;
-        margin: 20px auto; /* Центрирование по горизонтали */
-        background-color: #fff;
-        }
-
-        .input_wrapper {
-        list-style: none;
-        padding: 0;
-        margin: 0;
-        }
-
-        .input_style {
-        width: 100%;
-        padding: 10px;
-        border: 1px solid #ccc;
-        border-radius: 3px;
-        box-sizing: border-box;
-        margin-bottom: 10px;
-        }
-
-        /* Блок информации */
+        
+        /* Контейнеры блоков */
         .show_block_wrapper {
             display: flex;
-            flex-wrap: wrap; /* Разрешаем перенос элементов на новую строку */
-            justify-content: center; /* Распределяем элементы равномерно */
-            max-width: 1600px; /* Максимальная ширина контейнера 1200 пикселей */
-            margin: auto; /* Центрирование по горизонтали */
-            padding: 20px; /* Отступ 20 пикселей со всех сторон */
-
+            flex-wrap: wrap;
+            justify-content: center;
+            max-width: 1200px;
+            margin: 20px auto;
+            padding: 0 20px;
         }
+        
+        /* Блоки информации */
         .show_block {
-        background-color: #fff;
-        border: 1px solid #ccc;
-        border-radius: 5px;
-        padding: 20px;
-        margin: 10px; /* Добавляем отступ */
-        width: 300px;
-        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-        display: flex; /* Добавляем flexbox */
-        flex-direction: column; /* Выравниваем элементы по вертикали */
-        align-items: flex-start; /* Выравниваем элементы по левому краю */
+            background-color: #fff;
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 15px;
+            width: 280px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
         }
-
+        
+        .show_block:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+        
         .show_block ul {
-        list-style: none;
-        padding: 0;
-        margin: 0;
+            list-style: none;
+            padding: 0;
+            margin: 0;
         }
-
+        
         .show_block li {
-        margin-bottom: 10px;
-        list-style: none;
+            margin-bottom: 15px;
+            padding-bottom: 15px;
+            border-bottom: 1px dashed #e0e0e0;
         }
-
-        .users_info {
-        font-weight: bold;
+        
+        .show_block li:last-child {
+            margin-bottom: 0;
+            padding-bottom: 0;
+            border-bottom: none;
         }
-
+        
+        /* Текст информации */
+        .users_info, .tariff_info {
+            font-weight: bold;
+            color: #5d4037; /* Коричневый */
+            margin: 5px 0;
+        }
+        
         /* Кнопки */
         .edit_btn {
-        background-color: green; /* Синий цвет */
-        color: #fff;
-        border: none;
-        padding: 10px 20px;
-        border-radius: 3px;
-        cursor: pointer;
-        transition: background-color 0.3s ease;
+            background-color: #388e3c; /* Зеленый */
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: background-color 0.3s;
+            display: inline-block;
+            margin: 5px 0;
+            width: 100%;
+            text-align: center;
         }
-
+        
         .edit_btn:hover {
-        background-color: darkgreen; /* Более темный синий при наведении */
+            background-color: #2e7d32; /* Темно-зеленый */
         }
-
+        
         .edit_btn a {
-        text-decoration: none;
-        color: #fff;
+            text-decoration: none;
+            color: #fff;
+            display: block;
+        }
+        
+        /* Адаптивность */
+        @media (max-width: 768px) {
+            .show_block {
+                width: 100%;
+                margin: 10px 0;
+            }
+            
+            h1 {
+                font-size: 24px;
+                margin: 20px 0;
+            }
         }
 </style>
-<body>
-        <nav class="nav_bar">
-            <div class="container">
-            <ul class="nav_list">
-                <li class="nav_link"><a href="main.php">Главная</a></li>
-                <li class="nav_link"><a href="tariffs.php">Тарифы</a></li>
-                <li class="nav_link"><a href="<?php if (isset($_SESSION['auth'])) {echo 'account.php?slide=1';} else echo 'account.php'; ?>">Аккаунт</a></li>
-                <?php if (isset($_SESSION['role']) && $_SESSION['role']==1) { echo
-                '<li class="nav_link"><a href="admin.php">Админ панель</a></li>';}?>
-            </ul>
-            </div>
-        </nav>
-        
-        <h1>Редактирование пользователей</h1>
-        
-        <div class="show_block_wrapper">
-            
+<body>        
+    <h1>Редактирование пользователей</h1>
+    
+    <div class="show_block_wrapper">
         <?php
-        session_start();
         $stm = $connect->query('SELECT * FROM `users`');
         $users = $stm->fetchAll();
-        foreach($users as $user)
-        {
-        echo
-        '<div class="show_block">'.
-            '<li><p class="users_info">'."Логин - ".$user['login'].'</p></li>'.
-            '<li><p class="users_info">'."Имя - ".$user['name'].'</p></li>'.
-            '<li><p class="users_info">'."Фамилия - ".$user['surname'].'</p></li>'.
-            '<li><p class="users_info">'."Номер телефона - ".$user['phone_number'].'</p></li>'.
-            '<li><button class="edit_btn"><a href="edit.php?id='.$user['id'].'">Изменить</a></button></li>'.
-            '<li><button class="edit_btn"><a href="delete.php?id='.$user['id'].'">Удалить</a></button></li>'.
-        '</div>';
-        }?>
-        </div>
-                    <h1>Редактирование тарифов</h1>
-            
-        <div class="show_block_wrapper">
+        foreach($users as $user) {
+            echo '
+            <div class="show_block">
+                <ul>
+                    <li><p class="users_info">Логин: '.$user['login'].'</p></li>
+                    <li><p class="users_info">Имя: '.$user['name'].'</p></li>
+                    <li><p class="users_info">Фамилия: '.$user['surname'].'</p></li>
+                    <li><p class="users_info">Телефон: '.$user['phone_number'].'</p></li>
+                    <li><button class="edit_btn"><a href="action_admin.php?action=edit_user&id='.$user['id'].'">Изменить</a></button></li>
+                    <li><button class="edit_btn"><a href="delete.php?delete=user&id='.$user['id'].'">Удалить</a></button></li>
+                </ul>
+            </div>';
+        } ?>
+    </div>
+    
+    <h1>Редактирование тарифов</h1>
+    
+    <div class="show_block_wrapper">
         <?php
-        session_start();
         $stm = $connect->query('SELECT * FROM `tariff`');
         $tariffs = $stm->fetchAll();
-        foreach($tariffs as $tariff)
-        {
-        echo
-        '<div class="show_block">'.
-            '<ul>'.
-            '<li><p class="tariff_info">'."Название - ".$tariff['tariff_name'].'</p></li>'.
-            '<li><p class="tariff_info">'."скорость - ".$tariff['tariff_speed'].'</p></li>'.
-            '<li><p class="tariff_info">'."стоимость - ".$tariff['tariff_price'].'</p></li>'.
-            '<li><button class="edit_btn"><a href="edit.php?'.$tariff['id'].'">Изменить</a></button></li>'.
-            '<li><button class="edit_btn"><a href="delete.php?'.$tariff['id'].'">Удалить</a></button></li>'.
-            '</ul>'.
-        '</div>';
-        }?>
-        </div>
+        foreach($tariffs as $tariff) {
+            echo '
+            <div class="show_block">
+                <ul>
+                    <li><p class="tariff_info">Название: '.$tariff['tariff_name'].'</p></li>
+                    <li><p class="tariff_info">Скорость: '.$tariff['tariff_speed'].' Мбит/с</p></li>
+                    <li><p class="tariff_info">Стоимость: '.$tariff['tariff_price'].' руб.</p></li>
+                    <li><button class="edit_btn"><a href="action_admin.php?action=edit_tariff&id='.$tariff['id'].'">Изменить</a></button></li>
+                    <li><button class="edit_btn"><a href="delete.php?delete=tariff&id='.$tariff['id'].'">Удалить</a></button></li>
+                </ul>
+            </div>';
+        } ?>
+    </div>
+
+    <h1>Редактирование заявок</h1>
+    
+    <div class="show_block_wrapper">
+        <?php
+        $stm = $connect->query('SELECT 
+        s.*,
+        t.tariff_name,
+        u.login AS login
+        FROM 
+        services s
+        LEFT JOIN 
+        tariff t ON s.tariff_id = t.id
+        LEFT JOIN 
+        users u ON s.user_id = u.id        
+        ');
+        $services = $stm->fetchAll();
+        foreach($services as $service) {
+            echo '
+            <div class="show_block">
+                <ul>
+                    <li><p class="tariff_info">Название: '.$service['tariff_name'].'</p></li>
+                    <li><p class="tariff_info">Пользователь: '.$service['login'].'</p></li>
+                    <li><p class="tariff_info">Адрес: '.$service['addres'].'</p></li>
+                    <li><p class="tariff_info">Дата начало: '.$service['tariff_start'].'.</p></li>
+                    <li><p class="tariff_info">Дата окончание: '.$service['tariff_end'].'.</p></li>
+                    <li><button class="edit_btn"><a href="action_admin.php?action=edit_service&id='.$service['id'].'">Изменить</a></button></li>
+                    <li><button class="edit_btn"><a href="delete.php?delete=service&id='.$service['id'].'">Удалить</a></button></li>
+                </ul>
+            </div>';
+        } ?>
+    </div>
+
 </body>
+<?php include "footer.php"; ?>
 </html>

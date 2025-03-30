@@ -1,225 +1,157 @@
 <?php session_start();
-include "db.php";?>
+include "db.php";
+include "header.php";?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>ЛК-Телеком - Главная</title>
 </head>
 <style>
         /* Общие стили */
         body {
-        font-family: sans-serif;
-        margin: 0;
-        background-color: #fff;
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f5f5f5;
+            color: #333;
         }
-        h1,h2,h3 {
-        text-align: center;
-        margin-top: 20px;
-        color: black;
+        h1, h2, h3 {
+            text-align: center;
+            margin-top: 20px;
+            color: #d7ccc8; 
         }
         p {
-        font-family: sans-serif; /* Используйте шрифт без засечек */
-        font-size: 16px; /* Размер шрифта 16 пикселей */
-        line-height: 1.5; /* Межстрочный интервал 1.5 */
-        color: #333; /* Серый цвет текста */
+            font-size: 16px;
+            line-height: 1.6;
+            color: #424242;
         }
-        /* Навигационная панель */
-        .nav_bar {
-        background-color: green; /* Синий цвет */
-        color: #fff;
-        padding: 10px 0;
-        }
-        .nav_list {
-        display: flex;
-        justify-content: center;
-        list-style: none;
-        max-width: 1600px; /* Максимальная ширина контейнера 1200 пикселей */
-        margin: auto; /* Центрирование по горизонтали */
-        padding: 20px; /* Отступ 20 пикселей со всех сторон */
-        }
-        .nav_link {
-        margin: 0 15px;
-        }
-        .nav_link a {
-        text-decoration: none;
-        color: #fff;
-        font-weight: bold;
-        }
-    .input_reg {
-        position: relative;
-        margin: auto;
-        width: 500px;
-        min-height: 350px;
-        background-color: antiquewhite;
-        border-radius: 20px;
-        display: flex;
-        justify-content: center;
-    }
-    .input_wrapper {
-        list-style-type: none; 
-    }
-    .input_style {
-        width: 240px;
-        height: 20px;
-        margin: 10px;
-    }
-    h1 {
-        display: flex;
-        justify-content: center;
-    }
-    .show_users {
-        position: relative;
-        display: inline-block;
-        background-color: antiquewhite;
-        min-width: 150px;
-        margin: 20px;
-        border-radius: 20px;
         
-    }
-    .users_info {
-        padding-left: 10px;
-    }
-    .edit_btn {
-        background-color: brown;
-        margin: 10px;
-        min-width: 50px;
-        height: 30px;
-        border-radius: 30px;
-    }
-    .edit_btn a {
-        text-decoration: none;
-        color: white;
-    
-    }
-    .main_content {
-        position: relative;
-        display: flex;
-        max-width: 1200px;
-        background-color:#fff1;
-        margin: auto;
+        /* Основной контент */
+        .main_content {
+            max-width: 1200px;
+            margin: 30px auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 0 15px rgba(0,0,0,0.05);
+        }
         
-        flex-wrap: wrap;
-        justify-content: center;
-        flex-direction: column;
-    }
+        /* Баннер */
         .short_content {
-            background-image: url("main_images.jpg");
-            background-repeat: no-repeat;
-            background-size: contain;
-            height: 600px;
-
+            background-image: linear-gradient(rgba(255,255,255,0.7), rgba(255,255,255,0.7)), url("main_images.jpg");
+            background-size: cover;
+            background-position: center;
+            height: 400px;
             display: flex;
             flex-direction: column;
-            justify-content: space-around;
-            align-content: center;
+            justify-content: center;
+            align-items: center;
+            border-radius: 8px;
+            margin-bottom: 40px;
+        }
+        .short_content h1 {
+            font-size: 48px;
+            color: #2e7d32;
+            text-shadow: 1px 1px 3px rgba(0,0,0,0.2);
+            margin: 0;
         }
         .short_content h3 {
-            display: flex;
-            justify-content: center;
+            font-size: 24px;
+            color: #5d4037; /* Коричневый */
+            margin: 10px 0 0;
         }
+        
+        /* Блоки преимуществ */
         .description_content {
             display: flex;
-            justify-content: center;
+            justify-content: space-around;
             flex-wrap: wrap;
+            margin: 40px 0;
         }
         .block {
-            width: 150px;
-            display: block;
-            flex-direction: column;
-            justify-content: flex-start;
-
-            padding: 20px;
-            border-radius: 5px;
-            background-color: #f5f5f5; /* Светло-серый фон */
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Тень */
-            margin: 20px;
+            width: 250px;
+            padding: 25px;
+            border-radius: 8px;
+            background-color: #f5f5f5;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+            margin: 15px;
+            transition: transform 0.3s, box-shadow 0.3s;
         }
         .block:hover {
-            background-color:rgb(133, 204, 124);
-            transition: background-color 0.5s ease, color 0.5s ease;
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            background-color: #e8f5e9; /* Светло-зеленый */
         }
+        .block h3 {
+            color: #388e3c; /* Зеленый */
+            margin-top: 0;
+        }
+        
+        /* Тарифы */
         .services {
             display: flex;
             justify-content: center;
+            flex-wrap: wrap;
+            margin: 30px 0;
         }
         .show_tariff {
-        border: 1px solid #ddd; /* Тонкая граница */
-        padding: 20px; /* Отступ внутри */
-        margin-bottom: 20px; /* Отступ снизу */
-        border-radius: 5px; /* Скругленные углы */
-        background-color: #f9f9f9; /* Светло-серый фон */
-        margin: 20px;
+            border: 2px solid #a5d6a7; /* Светло-зеленый */
+            padding: 25px;
+            margin: 15px;
+            border-radius: 8px;
+            background-color: #fff;
+            width: 250px;
+            transition: all 0.3s;
         }
-
-        .show_tariff ul {
-        list-style: none; /* Убираем маркеры списка */
-        padding: 0; /* Убираем отступ списка */
+        .show_tariff:hover {
+            border-color: #388e3c;
+            box-shadow: 0 5px 15px rgba(56, 142, 60, 0.2);
         }
-
-        .show_tariff li {
-        margin-bottom: 10px; /* Отступ снизу для каждого элемента списка */
+        .show_tariff h3 {
+            color: #5d4037; /* Коричневый */
+            margin-top: 0;
         }
-
         .tariff_info {
-        font-weight: bold; /* Жирный шрифт для информации */
+            font-weight: bold;
+            color: #388e3c; /* Зеленый */
         }
-        footer {
-        background-color: #f0f0f0;
-        padding: 30px 0;
-        text-align: center;
+        .show_tariff ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
         }
-
-        .container {
-        max-width: 960px;
-        margin: 0 auto;
+        .show_tariff li {
+            margin-bottom: 15px;
+            padding-bottom: 15px;
+            border-bottom: 1px dashed #c8e6c9; /* Очень светлый зеленый */
         }
-
-        .row {
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: space-between;
+        .show_tariff li:last-child {
+            margin-bottom: 0;
+            padding-bottom: 0;
+            border-bottom: none;
         }
-
-        .col-md-4 {
-        width: 33.33%;
-        padding: 0 15px;
+        
+        /* Адаптивность */
+        @media (max-width: 768px) {
+            .col-md-4 {
+                width: 100%;
+            }
+            .block, .show_tariff {
+                width: 100%;
+                margin: 10px 0;
+            }
+            .nav_list {
+                flex-direction: column;
+                align-items: center;
+            }
+            .nav_link {
+                margin: 5px 0;
+            }
         }
-
-        .social-links {
-        list-style: none;
-        padding: 0;
-        }
-
-        .social-links li {
-        display: inline-block;
-        margin: 0 10px;
-        }
-
-        .social-links a {
-        color: #333;
-        font-size: 18px;
-        }
-
-        .copyright {
-        margin-top: 30px;
-        font-size: 14px;
-        }
-
 </style>
 <body>
-<nav class="nav_bar">
-    <h2>ЛК-Телеком</h2>
-            <ul class="nav_list">
-                <li class="nav_link"><a href="main.php">Главная</a></li>
-                <li class="nav_link"><a href="tariffs.php">Тарифы</a></li>
-                <li class="nav_link"><a href="<?php if (isset($_SESSION['auth'])) {echo 'account.php?slide=1';} else echo 'account.php'; ?>">Аккаунт</a></li>
-                <?php if (isset($_SESSION['role']) && $_SESSION['role']==1) { echo
-                '<li class="nav_link"><a href="admin.php">Админ панель</a></li>';}?>
-            </ul>
-        </nav>
-
         <div class="main_content">
                     <div class="short_content">
                         <h3>ЛК-Телеком</h3>
@@ -263,35 +195,6 @@ include "db.php";?>
                     }?>
                     </div>
         </div>
-                    <footer>
-            <div class="container">
-                <div class="row">
-                <div class="col-md-4">
-                    <h3>О компании</h3>
-                    <p>Информация о вашей компании, миссия, ценности.</p>
-                    <ul class="social-links">
-                    <li><a href="#"><i class="fab fa-facebook-f"></i></a></li>
-                    <li><a href="#"><i class="fab fa-twitter"></i></a></li>
-                    <li><a href="#"><i class="fab fa-instagram"></i></a></li>
-                    </ul>
-                </div>
-                <div class="col-md-4">
-                    <h3>Полезные ссылки</h3>
-                    <ul>
-                    <li><a href="#">О нас</a></li>
-                    <li><a href="#">Контакты</a></li>
-                    <li><a href="#">Политика конфиденциальности</a></li>
-                    </ul>
-                </div>
-                <div class="col-md-4">
-                    <h3>Контакты</h3>
-                    <p>Адрес, телефон, email.</p>
-                </div>
-                </div>
-                <div class="copyright">
-                <p>&copy; 2023 [Название компании]. Все права защищены.</p>
-                </div>
-            </div>
-            </footer>
 </body>
 </html>
+<?php include "footer.php"; ?>

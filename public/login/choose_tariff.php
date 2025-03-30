@@ -1,140 +1,124 @@
-<?php
-session_start();
+<?php session_start();
 include "db.php";
-?>
+include "header.php";?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Подключение тарифа - ЛК-Телеком</title>
 </head>
 <style>
         /* Общие стили */
         body {
-        font-family: sans-serif;
-        margin: 0;
-        background-color: #f4f4f4;
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f5f5f5;
+            color: #333;
         }
         h1 {
-        text-align: center;
-        margin-top: 20px;
-        color: #333;
+            text-align: center;
+            margin: 30px 0;
+            color: #2e7d32; /* Темно-зеленый */
+            font-size: 32px;
         }
-        /* Навигационная панель */
-        .nav_bar {
-        background-color: green; /* Синий цвет */
-        color: #fff;
-        padding: 10px 0;
+        
+        /* Форма выбора тарифа */
+        .tariff-selection {
+            max-width: 500px;
+            margin: 30px auto;
+            padding: 30px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+            border: 1px solid #e0e0e0;
         }
-        .nav_list {
-        display: flex;
-        justify-content: center;
-        list-style: none;
-        max-width: 1600px; /* Максимальная ширина контейнера 1200 пикселей */
-        margin: auto; /* Центрирование по горизонтали */
-        padding: 20px; /* Отступ 20 пикселей со всех сторон */
+        
+        .tariff-selection label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+            color: #5d4037; /* Коричневый */
+            font-size: 16px;
         }
-        .nav_link {
-        margin: 0 15px;
+        
+        .tariff-selection input[type="text"],
+        .tariff-selection select {
+            width: 100%;
+            padding: 12px 15px;
+            margin-bottom: 20px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 16px;
+            box-sizing: border-box;
+            transition: border-color 0.3s;
         }
-        .nav_link a {
-        text-decoration: none;
-        color: #fff;
-        font-weight: bold;
+        
+        .tariff-selection input[type="text"]:focus,
+        .tariff-selection select:focus {
+            border-color: #388e3c;
+            outline: none;
         }
-    .input_choose {
-        position: relative;
-        margin: auto;
-        width: 500px;
-        min-height: 350px;
-        background-color: antiquewhite;
-        border-radius: 20px;
-        display: flex;
-        justify-content: center;
-    }
-    .input_wrapper {
-        list-style-type: none; 
-    }
-    .input_style {
-        width: 240px;
-        height: 20px;
-        margin: 10px;
-    }
-    h1 {
-        display: flex;
-        justify-content: center;
-    }
-    .tariff-selection {
-        margin: auto;
-        border: 1px solid #ccc;
-        padding: 20px;
-        border-radius: 5px;
-        width: 300px;
-    }
-    .tariff-selection label {
-    display: block;
-    margin-bottom: 5px;
-    font-weight: bold;
-    }
-    .tariff-selection input[type="text"],
-    .tariff-selection select {
-    width: 100%;
-    padding: 10px;
-    margin-bottom: 15px;
-    border: 1px solid #ccc;
-    border-radius: 3px;
-    box-sizing: border-box;
-    }
-    .tariff-selection button {
-    background-color: #4CAF50; /* Зеленый цвет */
-    border: none;
-    color: white;
-    padding: 10px 20px;
-    text-align: center;
-    text-decoration: none;
-    display: inline-block;
-    font-size: 16px;
-    margin: 4px 2px;
-    border-radius: 4px;
-    cursor: pointer;
-    }
-
-    .tariff-selection button:hover {
-    background-color: #3e8e41; /* Более темный зеленый при наведении */
-    }
-
+        
+        .tariff-selection input[type="text"]::placeholder {
+            color: #bdbdbd;
+        }
+        
+        .tariff-selection button {
+            background-color: #388e3c; /* Зеленый */
+            border: none;
+            color: white;
+            padding: 12px 25px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin: 15px 0 0;
+            border-radius: 4px;
+            cursor: pointer;
+            width: 100%;
+            transition: background-color 0.3s;
+        }
+        
+        .tariff-selection button:hover {
+            background-color: #2e7d32; /* Темно-зеленый */
+        }
+        
+        /* Адаптивность */
+        @media (max-width: 600px) {
+            .tariff-selection {
+                margin: 20px 15px;
+                padding: 20px;
+            }
+            
+            h1 {
+                font-size: 24px;
+                margin: 20px 0;
+            }
+        }
 </style>
 <body>
-<nav class="nav_bar">
-            <ul class="nav_list">
-                <li class="nav_link"><a href="main.php">Главная</a></li>
-                <li class="nav_link"><a href="tariffs.php">Тарифы</a></li>
-                <li class="nav_link"><a href="<?php if (isset($_SESSION['auth'])) {echo 'account.php?slide=1';} else echo 'account.php'; ?>">Аккаунт</a></li>
-                <?php if (isset($_SESSION['role']) && $_SESSION['role']==1) { echo
-                '<li class="nav_link"><a href="admin.php">Админ панель</a></li>';}?>
-            </ul>
-        </nav>
-        <h1>Подключение тарифа</h1>
-        <form action="tariff_claim.php" method="POST">
+    <h1>Подключение тарифа</h1>
+    <form action="tariff_claim.php" method="POST">
         <div class="tariff-selection">
-            <label for="tariff-type">Тариф:</label>
-            <select id="tariff-type" name="tariff_select">
+            <label for="tariff-type">Выберите тариф:</label>
+            <select id="tariff-type" name="tariff_select" required>
             <?php
-                    $stm = $connect->query('SELECT * FROM `tariff`');
-                    $tariffs = $stm->fetchAll();                    
-                    foreach ($tariffs as $tarif)
-                    {
-                        echo '<option value="'.$tarif['id'].'">'.$tarif['tariff_name'].'</option>';
-                    }
-                    ?>
-            </select>
-            <label for="tariff-name">Адресс подключение:</label>
-            <input type="text" id="tariff-name" name="addres" placeholder="Введите адрес">
-            <button type="submit">Отправить</button>
-            </form>
-    </div>
-
-        
+            $stm = $connect->query('SELECT * FROM `tariff`');
+            $tariffs = $stm->fetchAll();                    
+            foreach ($tariffs as $tarif) {
+                $selected = ($tarif['id'] == $_GET['tariff_select']) ? 'selected' : '';
+                echo '<option value="'.$tarif['id'].'" '.$selected.'>'.$tarif['tariff_name'].' - '.$tarif['tariff_speed'].' Мбит/с ('.$tarif['tariff_price'].' руб./мес)</option>';
+            }
+            ?>
+        </select>            
+            <label for="tariff-address">Адрес подключения:</label>
+            <input type="text" id="tariff-address" name="addres" placeholder="Введите ваш адрес" required>
+            
+            <button type="submit">Подключить тариф</button>
+        </div>
+    </form>
 </body>
 </html>
+<?php include "footer.php"; ?>

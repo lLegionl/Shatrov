@@ -1,52 +1,124 @@
+<?php
+session_start();
+include "db.php";
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <style>
-        .info-container {
-            display: flex;
-            flex-direction: column; /* Выравниваем поля по вертикали */
-            width: 300px; /* Ширина контейнера */
-            margin: 20px auto; /* Центрирование по горизонтали */
-            padding: 20px;
-            border-radius: 5px;
-            background-color: #f5f5f5; /* Светло-серый фон */
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Тень */
-        }
-        .info-field {
-            margin-bottom: 10px; /* Отступ между полями */
-        }
-        .info-label {
-            font-weight: bold;
-            margin-bottom: 5px; /* Отступ перед значением */
-        }
-        .info-value {
-            color: #333; /* Темно-серый цвет значения */
-        }
-    </style>
+    <title>Подключение тарифа - ЛК-Телеком</title>
 </head>
+<style>
+        /* Общие стили */
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f5f5f5;
+            color: #333;
+        }
+        h1 {
+            text-align: center;
+            margin: 30px 0;
+            color: #2e7d32; /* Темно-зеленый */
+            font-size: 32px;
+        }
+        
+        /* Форма выбора тарифа */
+        .tariff-selection {
+            max-width: 500px;
+            margin: 30px auto;
+            padding: 30px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+            border: 1px solid #e0e0e0;
+        }
+        
+        .tariff-selection label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+            color: #5d4037; /* Коричневый */
+            font-size: 16px;
+        }
+        
+        .tariff-selection input[type="text"],
+        .tariff-selection select {
+            width: 100%;
+            padding: 12px 15px;
+            margin-bottom: 20px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 16px;
+            box-sizing: border-box;
+            transition: border-color 0.3s;
+        }
+        
+        .tariff-selection input[type="text"]:focus,
+        .tariff-selection select:focus {
+            border-color: #388e3c;
+            outline: none;
+        }
+        
+        .tariff-selection input[type="text"]::placeholder {
+            color: #bdbdbd;
+        }
+        
+        .tariff-selection button {
+            background-color: #388e3c; /* Зеленый */
+            border: none;
+            color: white;
+            padding: 12px 25px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin: 15px 0 0;
+            border-radius: 4px;
+            cursor: pointer;
+            width: 100%;
+            transition: background-color 0.3s;
+        }
+        
+        .tariff-selection button:hover {
+            background-color: #2e7d32; /* Темно-зеленый */
+        }
+        
+        /* Адаптивность */
+        @media (max-width: 600px) {
+            .tariff-selection {
+                margin: 20px 15px;
+                padding: 20px;
+            }
+            
+            h1 {
+                font-size: 24px;
+                margin: 20px 0;
+            }
+        }
+</style>
 <body>
-
-    <div class="info-container">
-        <div class="info-field">
-            <span class="info-label">Имя:</span>
-            <span class="info-value">Иван</span>
+    <h1>Подключение тарифа</h1>
+    <form action="tariff_claim.php" method="POST">
+        <div class="tariff-selection">
+            <label for="tariff-type">Выберите тариф:</label>
+            <select id="tariff-type" name="tariff_select" required>
+                <?php
+                $stm = $connect->query('SELECT * FROM `tariff`');
+                $tariffs = $stm->fetchAll();                    
+                foreach ($tariffs as $tarif) {
+                    echo '<option value="'.$tarif['id'].'">'.$tarif['tariff_name'].' - '.$tarif['tariff_speed'].' Мбит/с ('.$tarif['tariff_price'].' руб./мес)</option>';
+                }
+                ?>
+            </select>
+            
+            <label for="tariff-address">Адрес подключения:</label>
+            <input type="text" id="tariff-address" name="addres" placeholder="Введите ваш адрес" required>
+            
+            <button type="submit">Подключить тариф</button>
         </div>
-        <div class="info-field">
-            <span class="info-label">Email:</span>
-            <span class="info-value">ivan@example.com</span>
-        </div>
-        <div class="info-field">
-            <span class="info-label">Телефон:</span>
-            <span class="info-value">+7 (999) 123-45-67</span>
-        </div>
-        <div class="info-field">
-            <span class="info-label">Город:</span>
-            <span class="info-value">Москва</span>
-        </div>
-    </div>
-
+    </form>
 </body>
 </html>

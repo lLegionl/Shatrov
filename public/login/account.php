@@ -1,374 +1,400 @@
-<?php   session_start();
-        include "db.php";        
-?>
+<?php session_start();
+include "db.php";
+include "header.php";?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Личный кабинет - ЛК-Телеком</title>
 </head>
 <style>
         /* Общие стили */
         body {
-        font-family: sans-serif;
-        margin: 0;
-        background-color: #f4f4f4;
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f5f5f5;
+            color: #333;
         }
         h1 {
-        text-align: center;
-        margin-top: 20px;
-        color: #333;
-        }
-        /* Навигационная панель */
-        .nav_bar {
-        background-color: green; /* Синий цвет */
-        color: #fff;
-        padding: 10px 0;
-        }
-        .nav_list {
-        display: flex;
-        justify-content: center;
-        list-style: none;
-        max-width: 1600px; /* Максимальная ширина контейнера 1200 пикселей */
-        margin: auto; /* Центрирование по горизонтали */
-        padding: 20px; /* Отступ 20 пикселей со всех сторон */
-        }
-        .nav_link {
-        margin: 0 15px;
-        }
-        .nav_link a {
-        text-decoration: none;
-        color: #fff;
-        font-weight: bold;
-        }
+            text-align: center;
+            margin: 30px 0;
+            color: #2e7d32; /* Темно-зеленый */
+            font-size: 32px;
+        }        
+        /* Блоки форм */
         .block_wrapper {
             display: flex;
-            flex-wrap: wrap; /* Разрешаем перенос элементов на новую строку */
-            justify-content: center; /* Распределяем элементы равномерно */
-            max-width: 1600px; /* Максимальная ширина контейнера 1200 пикселей */
-            margin: auto; /* Центрирование по горизонтали */
-            padding: 20px; /* Отступ 20 пикселей со всех сторон */
+            flex-wrap: wrap;
+            justify-content: center;
+            max-width: 1200px;
+            margin: 20px auto;
+            padding: 20px;
         }
-    .input_login {
-        margin: auto;
-        width: 500px;
-        min-height: 150px;
-        background-color: antiquewhite;
-        border-radius: 20px;
-        display: flex;
-        justify-content: center;
-        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-        margin: 10px; /* Добавляем отступ */
-        background-color: #fff;
-        border: 1px solid #ccc;
-        border-radius: 5px;
-        padding: 20px;
-
-    }
-    .input_reg {
-        margin: auto;
-        width: 500px;
-        min-height: 350px;
-        background-color: antiquewhite;
-        border-radius: 20px;
-        display: flex;
-        justify-content: center;
-        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-        margin: 10px; /* Добавляем отступ */
-        background-color: #fff;
-        border: 1px solid #ccc;
-        border-radius: 5px;
-        padding: 20px;
-    }
-
-    .input_wrapper {
-        list-style-type: none; 
-    }
-    .input_style {
-        width: 240px;
-        height: 20px;
-        margin: 10px;
-        padding: 10px;
-        border: 1px solid #ccc;
-        border-radius: 3px;
-        box-sizing: border-box;
-        margin-bottom: 10px;
-    }
-    h1 {
-        display: flex;
-        justify-content: center;
-    }
-    .users_info {
-        padding-left: 10px;
-    }
+        
+        .input_login, .input_reg, .account {
+            width: 100%;
+            max-width: 800px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+            margin: 20px 0;
+            border: 1px solid #e0e0e0;
+            padding: 30px;
+        }
+        
+        .input_wrapper {
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+        }
+        
+        .input_style {
+            width: 100%;
+            padding: 12px 15px;
+            margin: 10px 0;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 16px;
+            box-sizing: border-box;
+            transition: border-color 0.3s;
+        }
+        
+        .input_style:focus {
+            border-color: #388e3c;
+            outline: none;
+        }
+        
         /* Кнопки */
-        .edit_btn {
-        background-color: green; /* Синий цвет */
-        color: #fff;
-        border: none;
-        padding: 10px 20px;
-        margin: 10px;
-        border-radius: 3px;
-        cursor: pointer;
-        transition: background-color 0.3s ease;
+        .edit_btn, .btn_select, input[type="submit"] {
+            background-color: #388e3c;
+            color: #fff;
+            border: none;
+            padding: 12px 25px;
+            margin: 10px 5px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s;
+            text-align: center;
+            display: inline-block;
         }
-
-        .edit_btn:hover {
-        background-color: darkgreen; /* Более темный синий при наведении */
+        
+        .edit_btn:hover, .btn_select:hover, input[type="submit"]:hover {
+            background-color: #2e7d32;
         }
-
-        .edit_btn a {
-        text-decoration: none;
-        color: #fff;
+        
+        .edit_btn a, .btn_select a {
+            text-decoration: none;
+            color: #fff;
         }
-        .li_btn
-        {
+        
+        .li_btn {
             display: flex;
             justify-content: center;
+            margin-top: 20px;
         }
-    .account_menu {
-        list-style: none;
-        padding: 0;
-        margin: 0;
-        display: flex; /* Используем flexbox для выравнивания элементов */
-        flex-direction: column;
-        justify-content: space-around; /* Распределяем элементы равномерно */
-        background-color: green; /* Светло-серый фон */
-        padding: 10px; /* Отступ 10 пикселей */
-        border-radius: 5px; /* Скругленные углы */
-        }
-
-    .menu_link {
-        margin: 0 10px; /* Отступ между элементами */
-        }
-
-    .menu_link a {
-        text-decoration: none;
-        color: white; /* Темно-серый цвет текста */
-        font-weight: bold; /* Жирный шрифт */
-        font-size: 20px;
-        }
-
-    .menu_link a:hover {
-        text-decoration: underline; /* Подчеркивание при наведении */
-        }
-    .account {
-        display: flex;
-        justify-content: space-around;
-        flex-wrap: wrap;
-        margin-right:150px;
-        margin-left:150px;
-        background-color: antiquewhite;
-        border-radius: 20px;
         
-        min-height: 150px;
-        border-radius: 20px;
-        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-        margin: 10px; /* Добавляем отступ */
-        background-color: #fff;
-        border: 1px solid #ccc;
-        border-radius: 5px;
-        padding: 20px;
-
-    }
-    .slide1 {
-        display: inline-block;   
-    }
-    .slide1 li {
-        margin: 10px;
-        display: flex;
-    }
-    .slide1 ul {
-        display: flex;
-        justify-content: space-between;
-        flex-direction: column;
-        padding-inline-start: 0px;
-        max-width: 500px;
-        margin-right: 50px;
-        margin-top: 20px;
-    }
-    .slide1 h4 {
-        display: flex;
-        justify-content: center;
-        margin: auto;
-        margin-left: 10px;
+        /* Меню аккаунта */
+        .account_menu {
+            list-style: none;
+            padding: 0;
+            margin: 0 0 30px 0;
+            display: flex;
+            justify-content: space-around;
+            background-color: #388e3c;
+            border-radius: 8px;
+            overflow: hidden;
         }
-        .btn_select {
-            border-radius: 10px;
-            border-color: green;
+        
+        .menu_link {
+            flex: 1;
+            text-align: center;
         }
-        .btn_select a {
-            color: green;
+        
+        .menu_link a {
+            display: block;
+            padding: 15px 10px;
             text-decoration: none;
+            color: #fff;
+            font-weight: bold;
             font-size: 16px;
-            margin: 5px;
+            transition: background-color 0.3s;
         }
-        .tariff_block {
+        
+        .menu_link a:hover {
+            background-color: #2e7d32;
+        }
+        
+        /* Слайды */
+        .slide1 {
+            width: 100%;
+        }
+        
+        .slide1 ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        
+        .slide1 li {
+            margin: 15px 0;
             display: flex;
-            flex-direction: column;
-            margin-left: 20px;
+            align-items: center;
         }
+        
+        .slide1 h4 {
+            margin-left: 15px;
+            color: #5d4037; /* Коричневый */
+            min-width: 150px;
+        }
+        
+        /* Тарифы */
         .tariff_wrapper {
-            position: relative;
             display: flex;
-            
-            margin-right: 50px;
-
+            flex-wrap: wrap;
+            justify-content: space-around;
+            margin-top: 20px;
         }
-        .info-container {
-            display: flex;
-            flex-direction: column; /* Выравниваем поля по вертикали */
-            width: 300px; /* Ширина контейнера */
-            margin: 20px; /* Центрирование по горизонтали */
+        
+        .tariff_block {
+            background-color: #f9f9f9;
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
             padding: 20px;
-            border-radius: 5px;
-            background-color: #f5f5f5; /* Светло-серый фон */
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Тень */
+            margin: 10px;
+            width: 250px;
+            text-align: center;
+            transition: transform 0.3s, box-shadow 0.3s;
         }
+        
+        .tariff_block:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        
+        .tariff_block h2 {
+            color: #388e3c;
+            margin-top: 0;
+        }
+        
+        .tariff_block h3 {
+            color: #5d4037;
+            margin: 10px 0;
+        }
+        
+        .btn_select {
+            background-color: #5d4037; /* Коричневый */
+        }
+        
+        .btn_select:hover {
+            background-color: #3e2723;
+        }
+        
+        /* Информация об услугах */
+        .info-container {
+            background-color: #f9f9f9;
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            padding: 25px;
+            margin: 20px auto;
+            max-width: 600px;
+        }
+        
         .info-field {
-            margin-bottom: 10px; /* Отступ между полями */
+            margin-bottom: 15px;
+            padding-bottom: 15px;
+            border-bottom: 1px dashed #ddd;
         }
+        
+        .info-field:last-child {
+            border-bottom: none;
+        }
+        
         .info-label {
             font-weight: bold;
-            margin-bottom: 5px; /* Отступ перед значением */
+            color: #5d4037;
+            margin-bottom: 5px;
+            display: block;
         }
+        
         .info-value {
-            color: #333; /* Темно-серый цвет значения */
+            color: #333;
+            font-size: 16px;
         }
-
+        
+        /* Адаптивность */
+        @media (max-width: 768px) {
+            .nav_list {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .nav_link {
+                margin: 5px 0;
+            }
+            
+            .account_menu {
+                flex-direction: column;
+            }
+            
+            .menu_link {
+                text-align: left;
+            }
+            
+            .slide1 li {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            
+            .slide1 h4 {
+                margin-left: 0;
+                margin-top: 5px;
+            }
+            
+            .tariff_block {
+                width: 100%;
+                margin: 10px 0;
+            }
+        }
 </style>
 <body>
-<nav class="nav_bar">
-            <ul class="nav_list">
-                <li class="nav_link"><a href="main.php">Главная</a></li>
-                <li class="nav_link"><a href="tariffs.php">Тарифы</a></li>
-                <li class="nav_link"><a href="<?php if (isset($_SESSION['auth'])) {echo 'account.php?slide=1';} else echo 'account.php'; ?>">Аккаунт</a></li>
-                <?php if (isset($_SESSION['role']) && $_SESSION['role']==1) { echo
-                '<li class="nav_link"><a href="admin.php">Админ панель</a></li>';}?>
-            </ul>
-        </nav>
-                    <?php var_dump($_SESSION); if (!isset($_SESSION['auth']))  { echo
-                '<h1>Авторизация</h1>
+<?php if (!isset($_SESSION['auth'])) { ?>
+    <h1>Авторизация</h1>
     <div class="block_wrapper">            
         <div class="input_login">
             <form action="auth.php" method="POST">            
                 <ul class="input_wrapper">
-                Login
-                <li><input type="text" class="input_style" name="login"></li>
-                password
-                <li><input type="text" class="input_style" name="password"></li>
-                <li class="li_btn"><input type="submit" value="send" class="edit_btn">
-                <button class="edit_btn"><a href="edit.php">edit</a></button>
-                </li>
-            </ul>
+                    <li><label>Логин</label></li>
+                    <li><input type="text" class="input_style" name="login" placeholder="Введите ваш логин"></li>
+                    <li><label>Пароль</label></li>
+                    <li><input type="password" class="input_style" name="password" placeholder="Введите ваш пароль"></li>
+                    <li class="li_btn">
+                        <input type="submit" value="Войти" class="edit_btn">
+                        <button class="edit_btn"><a href="edit.php">Регистрация</a></button>
+                    </li>
+                </ul>
             </form>
         </div>
     </div>
 
-            <h1>Регистрация</h1>
+    <h1>Регистрация</h1>
     <div class="block_wrapper">            
         <div class="input_reg">
             <form action="registration.php" method="POST">            
                 <ul class="input_wrapper">
-                Login
-                <li><input type="text" class="input_style" name="login"></li>
-                Name
-                <li><input type="text" class="input_style" name="name"></li>
-                Surname
-                <li><input type="text" class="input_style" name="surname"></li>
-                phone_number
-                <li><input type="text" class="input_style" name="phone"></li>
-                password
-                <li><input type="text" class="input_style" name="password"></li>
-                <li><input class="edit_btn" type="submit" value="send"></li>
-            </ul>
+                    <li><label>Логин</label></li>
+                    <li><input type="text" class="input_style" name="login" placeholder="Придумайте логин"></li>
+                    <li><label>Имя</label></li>
+                    <li><input type="text" class="input_style" name="name" placeholder="Ваше имя"></li>
+                    <li><label>Фамилия</label></li>
+                    <li><input type="text" class="input_style" name="surname" placeholder="Ваша фамилия"></li>
+                    <li><label>Номер телефона</label></li>
+                    <li><input type="text" class="input_style" name="phone" placeholder="+7 (XXX) XXX-XX-XX"></li>
+                    <li><label>Пароль</label></li>
+                    <li><input type="password" class="input_style" name="password" placeholder="Придумайте пароль"></li>
+                    <li class="li_btn"><input class="edit_btn" type="submit" value="Зарегистрироваться"></li>
+                </ul>
             </form>
         </div>
-    </div>';
-    
-                } else {?>
+    </div>
+<?php } else { ?>
+    <h1>Ваш аккаунт</h1>
+    <div class="block_wrapper">
+        <div class="account">
+            <ul class="account_menu">
+                <li class="menu_link"><a href="account.php?slide=1">Личные данные</a></li>
+                <li class="menu_link"><a href="account.php?slide=2">Услуги</a></li>
+                <li class="menu_link"><a href="account.php?slide=3">Подключенные услуги</a></li>
+            </ul>
 
-            <h1>Ваш аккаунт</h1>
-            <div class="block_wrapper"></div>
-                <div class="account">
-                    
-
-                <ul class="account_menu">
-                    <li class="menu_link"><a href="account.php?slide=<?=1?>">личные данные</a></li>
-                    <li class="menu_link"><a href="account.php?slide=<?=2?>">услуги</a></li>
-                    <li class="menu_link"><a href="account.php?slide=<?=3?>">Подключенные услуги</a></li>
-                </ul>
-
-                <?php 
-                switch ($_GET['slide']) {
-                    case 1:
-                        
-                        echo  
-                        '<div class="slide1">
-                        <ul class="slide1_ul">
-                            <li><input type="text" class="input_style" value="'.$_SESSION['user_data']['login'].'"><h4>Логин</h4></li>
-                            <li><input type="text" class="input_style" value="'.$_SESSION['user_data']['name'].'"><h4>Имя</h4></li>
-                            <li><input type="text" class="input_style" value="'.$_SESSION['user_data']['surname'].'"><h4>Фамилия</h4></li>
-                            <li><input type="text" class="input_style" value="'.$_SESSION['user_data']['phone_number'].'"><h4>Номер телефона</h4></li>
-                            <li><button class="edit_btn"><a href="edit.php?id='.$_SESSION['user_data']['id'].'">edit</a></button>
-                            <button class="edit_btn"><a href="logout.php">exit</a></button></li>
+            <?php 
+            switch ($_GET['slide']) {
+                case 1:
+                    echo  
+                    '<div class="slide1">
+                        <ul>
+                            <li>
+                                <input type="text" class="input_style" value="'.$_SESSION['user_data']['login'].'" readonly>
+                                <h4>Логин</h4>
+                            </li>
+                            <li>
+                                <input type="text" class="input_style" value="'.$_SESSION['user_data']['name'].'" readonly>
+                                <h4>Имя</h4>
+                            </li>
+                            <li>
+                                <input type="text" class="input_style" value="'.$_SESSION['user_data']['surname'].'" readonly>
+                                <h4>Фамилия</h4>
+                            </li>
+                            <li>
+                                <input type="text" class="input_style" value="'.$_SESSION['user_data']['phone_number'].'" readonly>
+                                <h4>Номер телефона</h4>
+                            </li>
+                            <li class="li_btn">
+                                <button class="edit_btn"><a href="edit.php?id='.$_SESSION['user_data']['id'].'">Редактировать</a></button>
+                                <button class="edit_btn"><a href="logout.php">Выйти</a></button>
+                            </li>
                         </ul>
+                    </div>';
+                    break;
+                    
+                case 2: 
+                    $stm = $connect->query('SELECT * FROM `tariff`');
+                    $tariffs = $stm->fetchAll();
+                    echo '<div class="tariff_wrapper">';                  
+                    foreach ($tariffs as $tarif) {
+                        echo '
+                        <div class="tariff_block">
+                            <h2>'.$tarif['tariff_name'].'</h2>
+                            <h3>'.$tarif['tariff_speed'].' Мбит/с</h3>
+                            <h3>'.$tarif['tariff_price'].' руб./мес</h3>
+                            <button class="btn_select"><a href="choose_tariff.php?tariff_select='.$tarif['id'].'">Выбрать</a></button>
                         </div>';
-                        break;
-                        case 2: 
-                            
-                            $stm = $connect->query('SELECT * FROM `tariff`');
-                            $tariffs = $stm->fetchAll();
-                            echo '<div class="tariff_wrapper">'  ;                  
-                            foreach ($tariffs as $tarif)
-                            {   echo
-                                '
-                                <div class="tariff_block">
-                                <h2>'.$tarif['tariff_name'].'</h2>
-                                <h3>'.$tarif['tariff_speed'].'mb/s</h3>
-                                <h3>'.$tarif['tariff_price'].'.руб</h3>
-                                <button class="btn_select"><a href="choose_tariff.php?tariff='.$tarif['id'].'">Выбрать</a></button>
-                                </div>';
-                            } echo '</div>';
-                            break;
-                        case 3:
-                            $id_of_user=$_SESSION['id_user'];
-                            $stm = $connect->query("SELECT services.*, tariff.tariff_name
-                            FROM services
-                            JOIN tariff ON services.tariff_id = tariff.id
-                            WHERE services.user_id = $id_of_user");
-                            $result = $stm->fetch();
- 
-                                echo '<div class="info-container">
-                                <div class="info-field">
-                                    <span class="info-label">Тариф:</span>
-                                    <span class="info-value">'.$result['tariff_name'].'</span>
-                                </div>
-                                <div class="info-field">
-                                    <span class="info-label">Аддрес:</span>
-                                    <span class="info-value">'.$result['addres'].'</span>
-                                </div>
-                                <div class="info-field">
-                                    <span class="info-label">Начало:</span>
-                                    <span class="info-value">'.$result['tariff_start'].'</span>
-                                </div>
-                                <div class="info-field">
-                                    <span class="info-label">Окончание:</span>
-                                    <span class="info-value">'.$result['tariff_end'].'</span>
-                                </div>
-                            </div>';
-                            
-                            echo '<a href="choose_tariff.php">у вас нету подключенных тарифов</a>' ;
-
-                        break;
-                        
-                }
-                ?>
-
-                </div>
-                </div>
-
-        <?php }?>
+                    } 
+                    echo '</div>';
+                    break;
+                    
+                case 3:
+                    $id_of_user = $_SESSION['id_user'];
+                    $stm = $connect->query("SELECT services.*, tariff.tariff_name
+                    FROM services
+                    JOIN tariff ON services.tariff_id = tariff.id
+                    WHERE services.user_id = $id_of_user");
+                    $services = $stm->fetchAll();
+                    
+                    if ($services) {
+                        foreach ($services as $service)
+                        echo '<div class="info-container">
+                            <div class="info-field">
+                                <span class="info-label">Тариф:</span>
+                                <span class="info-value">'.$service['tariff_name'].'</span>
+                            </div>
+                            <div class="info-field">
+                                <span class="info-label">Адрес:</span>
+                                <span class="info-value">'.$service['addres'].'</span>
+                            </div>
+                            <div class="info-field">
+                                <span class="info-label">Начало действия:</span>
+                                <span class="info-value">'.$service['tariff_start'].'</span>
+                            </div>
+                            <div class="info-field">
+                                <span class="info-label">Окончание действия:</span>
+                                <span class="info-value">'.$service['tariff_end'].'</span>
+                            </div>
+                        </div>';
+                    } else {
+                        echo '<div class="info-container">
+                            <p>У вас нет подключенных тарифов</p>
+                            <button class="edit_btn"><a href="account.php?slide=2">Выбрать тариф</a></button>
+                        </div>';
+                    }
+                    break;
+            }
+            ?>
+        </div>
+    </div>
+<?php } ?>
 </body>
 </html>
+<?php include "footer.php"; ?>
