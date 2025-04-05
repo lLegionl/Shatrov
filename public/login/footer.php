@@ -88,7 +88,7 @@
                     <h3>Полезные ссылки</h3>
                     <ul>
                     <li><a href="main.php">Главная</a></li>
-                    <li><a href="tariffs.php">Тарифы</a></li>
+                    <li><a href="main.php#tariffs">Тарифы</a></li>
                     <li><a href="account.php">Личный кабинет</a></li>
                     </ul>
                 </div>

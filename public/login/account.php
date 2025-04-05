@@ -314,29 +314,34 @@ include "header.php";?>
                 case 1:
                     echo  
                     '<div class="slide1">
+                    <form action="auth_edit.php?id='.$_SESSION['user_data']['id'].'" method="post">
                         <ul>
                             <li>
-                                <input type="text" class="input_style" value="'.$_SESSION['user_data']['login'].'" readonly>
+                                <input type="text" class="input_style" value="'.$_SESSION['user_data']['login'].'" name="login" required>
                                 <h4>Логин</h4>
                             </li>
                             <li>
-                                <input type="text" class="input_style" value="'.$_SESSION['user_data']['name'].'" readonly>
+                                <input type="text" class="input_style" value="'.$_SESSION['user_data']['name'].'" name="name" required>
                                 <h4>Имя</h4>
                             </li>
                             <li>
-                                <input type="text" class="input_style" value="'.$_SESSION['user_data']['surname'].'" readonly>
+                                <input type="text" class="input_style" value="'.$_SESSION['user_data']['surname'].'" name="surname" required>
                                 <h4>Фамилия</h4>
                             </li>
                             <li>
-                                <input type="text" class="input_style" value="'.$_SESSION['user_data']['phone_number'].'" readonly>
+                                <input type="text" class="input_style" value="'.$_SESSION['user_data']['phone_number'].'" name="phone" required>
                                 <h4>Номер телефона</h4>
                             </li>
+                            <li>
+                                <input type="text" class="input_style" value="'.$_SESSION['user_data']['password'].'" name="password" required>
+                                <h4>Пароль</h4>
+                            </li>
                             <li class="li_btn">
-                                <button class="edit_btn"><a href="edit.php?id='.$_SESSION['user_data']['id'].'">Редактировать</a></button>
+                                <input class="edit_btn" value="Редактировать" type="submit"></input>
                                 <button class="edit_btn"><a href="logout.php">Выйти</a></button>
                             </li>
                         </ul>
-                    </div>';
+                    </form></div>';
                     break;
                     
                 case 2: 
