@@ -178,7 +178,7 @@ include "header.php";?>
                         </div>
                     </div>
                     <h2>Предоставляемы нами тарифы</h2>
-                    <div class="services">
+                    <div class="services" id="tariffs">
                     <?php
                     $stm = $connect->query('SELECT * FROM `tariff`');
                     $tariffs = $stm->fetchAll();

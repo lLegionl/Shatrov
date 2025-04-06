@@ -24,9 +24,9 @@ if (!empty($_POST['login']) && !empty($_POST['password']) && !empty($_POST['name
     id='$id'"
     );
     $result = $stm->fetch();
-    header('location:account.php?slide=1');
+    header('location:account.php?slide=1&ok');
     
 }
-else {header('location:account.php');}
+else {header('location:account.php?slide=1&error');}
 
 ?> 
