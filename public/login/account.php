@@ -186,6 +186,7 @@ include "header.php";?>
         
         .btn_select {
             background-color: #5d4037; /* Коричневый */
+            text-decoration: none;
         }
         
         .btn_select:hover {
@@ -354,7 +355,7 @@ include "header.php";?>
                             <h2>'.$tarif['tariff_name'].'</h2>
                             <h3>'.$tarif['tariff_speed'].' Мбит/с</h3>
                             <h3>'.$tarif['tariff_price'].' руб./мес</h3>
-                            <button class="btn_select"><a href="choose_tariff.php?tariff_select='.$tarif['id'].'">Выбрать</a></button>
+                            <a class="btn_select" href="choose_tariff.php?tariff_select='.$tarif['id'].'">Выбрать</a>
                         </div>';
                     } 
                     echo '</div>';

@@ -58,7 +58,6 @@
         
 
 </style>
-<body>
 <nav class="nav_bar">
     <h2>ЛК-Телеком</h2>
             <ul class="nav_list">
@@ -69,5 +68,3 @@
                 '<li class="nav_link"><a href="admin.php">Админ панель</a></li>';}?>
             </ul>
         </nav>
-</body>
-</html>
