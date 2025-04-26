@@ -1,6 +1,7 @@
 <?php 
 include "db.php";
-if (!empty($_POST['login']) && !empty($_POST['password']) && !empty($_POST['name']) && !empty($_POST['surname']) && !empty($_POST['phone']))
+if (!empty($_POST['login']) && !empty($_POST['password']) && !empty($_POST['name']) 
+&& !empty($_POST['surname']) && !empty($_POST['phone']))
 {   
     session_start();
     $id=$_GET['id'];
@@ -24,7 +25,7 @@ if (!empty($_POST['login']) && !empty($_POST['password']) && !empty($_POST['name
     id='$id'"
     );
     $result = $stm->fetch();
-    header('location:account.php?slide=1&ok');
+    header('location:auth.php?make=update');
     
 }
 else {header('location:account.php?slide=1&error');}

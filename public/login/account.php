@@ -273,7 +273,6 @@ include "header.php";?>
                     <li><input type="password" class="input_style" name="password" placeholder="Введите ваш пароль"></li>
                     <li class="li_btn">
                         <input type="submit" value="Войти" class="edit_btn">
-                        <button class="edit_btn"><a href="edit.php">Регистрация</a></button>
                     </li>
                 </ul>
             </form>

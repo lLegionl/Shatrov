@@ -76,7 +76,6 @@
         
 
 </style>
-<body>
 <footer>
             <div class="container">
                 <div class="row">
@@ -89,7 +88,7 @@
                     <ul>
                     <li><a href="main.php">Главная</a></li>
                     <li><a href="main.php#tariffs">Тарифы</a></li>
-                    <li><a href="account.php">Личный кабинет</a></li>
+                    <li><a href="<?php if (!empty($_SESSION['auth']) && $_SESSION['auth']==1){ echo 'account.php?slide=1';} else echo 'account.php';?>">Личный кабинет</a></li>
                     </ul>
                 </div>
                 <div class="col-md-4">
@@ -103,7 +102,4 @@
                 <p>&copy; 2025 ЛК-Телеком. Все права защищены.</p>
                 </div>
             </div>
-            </footer>
-
-</body>
-</html>
+</footer>

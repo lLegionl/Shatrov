@@ -18,5 +18,12 @@ if (!empty($_POST['login']) && !empty($_POST['password']))
         $_SESSION['user_data']=$result;
     }
 }
+if (!empty($_GET['make']))
+{
+    $id = $_SESSION['user_data']['id'];
+    $stm = $connect->query("SELECT * FROM users WHERE id='$id'");
+    $result = $stm->fetch();
+    $_SESSION['user_data']=$result;
+}
 header('location:account.php?slide=1');
 ?> 

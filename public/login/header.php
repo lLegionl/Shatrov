@@ -58,12 +58,12 @@
         
 
 </style>
-<nav class="nav_bar">
-    <h2>ЛК-Телеком</h2>
+        <nav class="nav_bar">
+            <h2>ЛК-Телеком</h2>
             <ul class="nav_list">
                 <li class="nav_link"><a href="main.php">Главная</a></li>
-                <!-- <li class="nav_link"><a href="tariffs.php">Тарифы</a></li> -->
-                <li class="nav_link"><a href="<?php if (isset($_SESSION['auth'])) {echo 'account.php?slide=1';} else echo 'account.php'; ?>">Аккаунт</a></li>
+                <li class="nav_link"><a href="<?php if (isset($_SESSION['auth'])) {echo 'account.php?slide=1';} 
+                else echo 'account.php'; ?>">Аккаунт</a></li>
                 <?php if (isset($_SESSION['role']) && $_SESSION['role']==1) { echo
                 '<li class="nav_link"><a href="admin.php">Админ панель</a></li>';}?>
             </ul>

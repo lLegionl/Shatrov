@@ -109,7 +109,8 @@ include "header.php";?>
             $tariffs = $stm->fetchAll();                    
             foreach ($tariffs as $tarif) {
                 $selected = ($tarif['id'] == $_GET['tariff_select']) ? 'selected' : '';
-                echo '<option value="'.$tarif['id'].'" '.$selected.'>'.$tarif['tariff_name'].' - '.$tarif['tariff_speed'].' Мбит/с ('.$tarif['tariff_price'].' руб./мес)</option>';
+                echo '<option value="'.$tarif['id'].'" '.$selected.'>'.$tarif['tariff_name'].' - '.
+                $tarif['tariff_speed'].' Мбит/с ('.$tarif['tariff_price'].' руб./мес)</option>';
             }
             ?>
         </select>            
