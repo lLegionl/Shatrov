@@ -81,14 +81,17 @@
                 <div class="row">
                 <div class="col-md-4">
                     <h3>О компании</h3>
-                    <p>ЛК-Телеком - провайдер качественного интернета в Красногорске и Красногорском районе с 2005 года.</p>
+                    <p>ЛК-Телеком - провайдер качественного интернета 
+                        в Красногорске и Красногорском районе с 2005 года.</p>
                 </div>
                 <div class="col-md-4">
                     <h3>Полезные ссылки</h3>
                     <ul>
                     <li><a href="main.php">Главная</a></li>
                     <li><a href="main.php#tariffs">Тарифы</a></li>
-                    <li><a href="<?php if (!empty($_SESSION['auth']) && $_SESSION['auth']==1){ echo 'account.php?slide=1';} else echo 'account.php';?>">Личный кабинет</a></li>
+                    <li><a href="<?php if (!empty($_SESSION['auth']) && $_SESSION['auth']==1){ 
+                    echo 'account.php?slide=1';}
+                    else echo 'account.php';?>">Личный кабинет</a></li>
                     </ul>
                 </div>
                 <div class="col-md-4">
