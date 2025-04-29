@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.2.2
+-- version 5.2.1
 -- https://www.phpmyadmin.net/
 --
--- Хост: MySQL-8.0
--- Время создания: Мар 19 2025 г., 10:19
--- Версия сервера: 8.0.35
--- Версия PHP: 8.3.6
+-- Хост: MySQL-8.2
+-- Время создания: Апр 29 2025 г., 23:51
+-- Версия сервера: 8.2.0
+-- Версия PHP: 8.1.28
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -41,7 +41,10 @@ CREATE TABLE `services` (
 --
 
 INSERT INTO `services` (`id`, `user_id`, `tariff_id`, `addres`, `tariff_start`, `tariff_end`) VALUES
-(1, 1, 2, 'ул. Краснопресненская', '05.03.2025', '05.04.2025');
+(1, 1, 2, 'ул. Краснопресненская', '05.03.2025', '05.04.2025'),
+(2, 2, 4, 'ул. Народного ополчение д34', '2025-03-21', '2025-04-20'),
+(4, 1, 4, 'ул. Народного ополчение д34', '2025-03-30', '2025-04-29'),
+(5, 1, 4, 'ул. Народного ополчение д34', '2025-03-30', '2025-04-29');
 
 -- --------------------------------------------------------
 
@@ -63,7 +66,8 @@ CREATE TABLE `tariff` (
 INSERT INTO `tariff` (`id`, `tariff_name`, `tariff_speed`, `tariff_price`) VALUES
 (1, 'Основной', 50, 300),
 (2, 'Продвинутый', 100, 500),
-(3, 'Игровой', 500, 1000);
+(3, 'Игровой', 500, 1000),
+(4, 'ультра', 999, 1500);
 
 -- --------------------------------------------------------
 
@@ -86,8 +90,9 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `login`, `name`, `surname`, `phone_number`, `password`, `role`) VALUES
-(1, 'Legion', 'Алексей', 'Шатров', '890011111', '1111222', 1),
-(2, '123', '123', '123', '123', '1234', 0);
+(1, 'Legion', 'Алексей', 'Шатров', '790000021', '111', 1),
+(2, 'prefect', 'Александр', 'Белозоров', '+7-913-223-56-34', '1234dd', 0),
+(4, 'Golovach', 'Мария', 'Глазунова', '+7-922-444-54-31', '8800553535', NULL);
 
 --
 -- Индексы сохранённых таблиц
@@ -121,19 +126,19 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT для таблицы `services`
 --
 ALTER TABLE `services`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT для таблицы `tariff`
 --
 ALTER TABLE `tariff`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT для таблицы `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- Ограничения внешнего ключа сохраненных таблиц
