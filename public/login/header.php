@@ -1,70 +1,63 @@
-<?php session_start(); ?>
+<?php 
+// Уже есть session_start() в main.php
+?>
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ru">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>footer</title>
+    <title><?php echo isset($page_title) ? htmlspecialchars($page_title) : 'ЛК-Телеком'; ?></title>
+    
+    <!-- Общие мета-теги -->
+    <?php if (isset($page_description)): ?>
+    <meta name="description" content="<?php echo htmlspecialchars($page_description); ?>">
+    <?php endif; ?>
+    
+    <?php if (isset($page_keywords)): ?>
+    <meta name="keywords" content="<?php echo htmlspecialchars($page_keywords); ?>">
+    <?php endif; ?>
+    
+    <!-- CSS -->
+    <link rel="stylesheet" href="main.css">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
+    <link rel="apple-touch-icon" href="apple-touch-icon.png">
+    
+    <!-- Предзагрузка критичных ресурсов -->
+    <link rel="preload" href="main_images.jpg" as="image">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
 </head>
-<style>
-            /* Общие стили */
-            body {
-            font-family: 'Arial', sans-serif;
-            margin: 0;
-            padding: 0;
-            background-color: #f5f5f5;
-            color: #333;
-        }
-        h1, h2, h3 {
-            text-align: center;
-            margin-top: 20px;
-            color: #d7ccc8; 
-        }
-        p {
-            font-size: 16px;
-            line-height: 1.6;
-            color: #424242;
-        }
-        
-        /* Навигационная панель */
-        .nav_bar {
-            background-color: #388e3c; /* Зеленый */
-            color: #fff;
-            padding: 10px 0;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-        }
-        .nav_list {
-            display: flex;
-            justify-content: center;
-            list-style: none;
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0;
-        }
-        .nav_link {
-            margin: 0 20px;
-            padding: 10px 0;
-        }
-        .nav_link a {
-            text-decoration: none;
-            color: #fff;
-            font-weight: bold;
-            font-size: 18px;
-            transition: color 0.3s;
-        }
-        .nav_link a:hover {
-            color: #d7ccc8; /* Светло-бежевый */
-        }
-        
-
-</style>
-        <nav class="nav_bar">
-            <h2>ЛК-Телеком</h2>
-            <ul class="nav_list">
-                <li class="nav_link"><a href="main.php">Главная</a></li>
-                <li class="nav_link"><a href="<?php if (isset($_SESSION['auth'])) {echo 'account.php?slide=1';} 
-                else echo 'account.php'; ?>">Аккаунт</a></li>
-                <?php if (isset($_SESSION['role']) && $_SESSION['role']==1) { echo
-                '<li class="nav_link"><a href="admin.php">Админ панель</a></li>';}?>
-            </ul>
+<body>
+    <header>
+        <nav class="nav_bar" role="navigation" aria-label="Основная навигация">
+            <div class="nav_container">
+                <h2>ЛК-Телеком</h2>
+                <ul class="nav_list">
+                    <li class="nav_link">
+                        <a href="main.php" aria-current="<?php echo basename($_SERVER['PHP_SELF']) == 'main.php' ? 'page' : 'false'; ?>">
+                            Главная
+                        </a>
+                    </li>
+                    <li class="nav_link">
+                        <a href="<?php 
+                            if (isset($_SESSION['auth'])) {
+                                echo 'account.php?slide=1';
+                            } else {
+                                echo 'account.php';
+                            }
+                        ?>">
+                            <?php echo isset($_SESSION['auth']) ? 'Личный кабинет' : 'Войти'; ?>
+                        </a>
+                    </li>
+                    <?php if (isset($_SESSION['role']) && $_SESSION['role'] == 1): ?>
+                    <li class="nav_link">
+                        <a href="admin.php">Админ панель</a>
+                    </li>
+                    <?php endif; ?>
+                </ul>
+            </div>
         </nav>
+    </header>
+    
+    <main id="main-content">
