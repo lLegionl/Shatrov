@@ -77,7 +77,7 @@ include "header.php";
             <!-- Преимущество 3: Скорость -->
             <article class="block">
                 <h3>Высокая скорость</h3>
-                <p>Современное и качественное оборудование гарантирует высокую скорость интернета до 500 Мбит/с</p>
+                <p>Современное и качественное оборудование гарантирует высокую скорость интернета до 1 гб/с</p>
             </article>
             
             <!-- Преимущество 4: Безлимит -->
@@ -139,7 +139,13 @@ include "header.php";
                         
                         <!-- Кнопка заказа -->
                         <li>
-                            <a href="order.php?tariff_id=<?php echo $tarif['id']; ?>" 
+                            <a href="<?php 
+                            if (isset($_SESSION['auth'])) {
+                                echo 'account.php?slide=2';
+                            } else {
+                                echo 'account.php';
+                            }
+                            ?>" 
                                class="order-btn"
                                itemprop="url">
                                 Заказать подключение
@@ -287,7 +293,7 @@ function initDoubleClickProtection() {
             setTimeout(() => {
                 this.classList.remove('processing');
                 this.innerHTML = 'Заказать подключение';
-            }, 3000);
+            }, 300);
         });
     });
 }
