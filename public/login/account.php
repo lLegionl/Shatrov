@@ -7,7 +7,6 @@ include "header.php";?>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Личный кабинет - ЛК-Телеком</title>
-</head>
 <style>
         /* Общие стили */
         body {
@@ -20,7 +19,7 @@ include "header.php";?>
         h1 {
             text-align: center;
             margin: 30px 0;
-            color: #2e7d32; /* Темно-зеленый */
+            color: #2e7d32;
             font-size: 32px;
         }        
         /* Блоки форм */
@@ -96,6 +95,31 @@ include "header.php";?>
             margin-top: 20px;
         }
         
+        /* Кнопки переключения форм */
+        .form-toggle {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+        
+        .toggle-btn {
+            background-color: #e0e0e0;
+            color: #333;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: bold;
+            transition: all 0.3s;
+        }
+        
+        .toggle-btn.active {
+            background-color: #388e3c;
+            color: #fff;
+        }
+        
         /* Меню аккаунта */
         .account_menu {
             list-style: none;
@@ -146,7 +170,7 @@ include "header.php";?>
         
         .slide1 h4 {
             margin-left: 15px;
-            color: #5d4037; /* Коричневый */
+            color: #5d4037;
             min-width: 150px;
         }
         
@@ -185,7 +209,7 @@ include "header.php";?>
         }
         
         .btn_select {
-            background-color: #5d4037; /* Коричневый */
+            background-color: #5d4037;
             text-decoration: none;
         }
         
@@ -225,6 +249,45 @@ include "header.php";?>
             font-size: 16px;
         }
         
+        /* Стили для поля телефона */
+        .phone-input-wrapper {
+            position: relative;
+            width: 100%;
+        }
+        
+        .phone-input-wrapper .input_style {
+            padding-left: 45px;
+        }
+        
+        .phone-prefix {
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #388e3c;
+            font-weight: bold;
+            font-size: 16px;
+            pointer-events: none;
+            z-index: 1;
+        }
+        
+        .phone-hint {
+            font-size: 12px;
+            color: #777;
+            margin-top: 5px;
+            margin-left: 5px;
+        }
+        
+        .phone-valid {
+            border-color: #4caf50 !important;
+            background-color: #f0fff0;
+        }
+        
+        .phone-invalid {
+            border-color: #f44336 !important;
+            background-color: #fff0f0;
+        }
+        
         /* Адаптивность */
         @media (max-width: 768px) {
             .nav_list {
@@ -258,13 +321,31 @@ include "header.php";?>
                 width: 100%;
                 margin: 10px 0;
             }
+            
+            .form-toggle {
+                flex-direction: column;
+                align-items: center;
+                gap: 10px;
+            }
+            
+            .toggle-btn {
+                width: 200px;
+            }
         }
 </style>
+</head>
 <body>
 <?php if (!isset($_SESSION['auth'])) { ?>
-    <h1>Авторизация</h1>
-    <div class="block_wrapper">            
-        <div class="input_login">
+    <h1>Добро пожаловать</h1>
+    
+    <div class="form-toggle">
+        <button class="toggle-btn active" id="showLoginBtn">Вход</button>
+        <button class="toggle-btn" id="showRegBtn">Регистрация</button>
+    </div>
+    
+    <div class="block_wrapper">
+        <!-- Форма авторизации -->
+        <div class="input_login" id="loginForm" style="display: block;">
             <form action="auth.php" method="POST">            
                 <ul class="input_wrapper">
                     <li><label>Логин</label></li>
@@ -277,12 +358,10 @@ include "header.php";?>
                 </ul>
             </form>
         </div>
-    </div>
 
-    <h1>Регистрация</h1>
-    <div class="block_wrapper">            
-        <div class="input_reg">
-            <form action="registration.php" method="POST">            
+        <!-- Форма регистрации -->
+        <div class="input_reg" id="regForm" style="display: none;">
+            <form action="registration.php" method="POST" id="registrationForm">            
                 <ul class="input_wrapper">
                     <li><label>Логин</label></li>
                     <li><input type="text" class="input_style" name="login" placeholder="Придумайте логин"></li>
@@ -291,7 +370,13 @@ include "header.php";?>
                     <li><label>Фамилия</label></li>
                     <li><input type="text" class="input_style" name="surname" placeholder="Ваша фамилия"></li>
                     <li><label>Номер телефона</label></li>
-                    <li><input type="text" class="input_style" name="phone" placeholder="+7 (XXX) XXX-XX-XX"></li>
+                    <li>
+                        <div class="phone-input-wrapper">
+                            <span class="phone-prefix">+7</span>
+                            <input type="tel" class="input_style" name="phone" id="phoneInput" placeholder="(XXX) XXX-XX-XX">
+                        </div>
+                        <div class="phone-hint" id="phoneHint">Формат: (XXX) XXX-XX-XX</div>
+                    </li>
                     <li><label>Пароль</label></li>
                     <li><input type="password" class="input_style" name="password" placeholder="Придумайте пароль"></li>
                     <li class="li_btn"><input class="edit_btn" type="submit" value="Зарегистрироваться"></li>
@@ -299,6 +384,92 @@ include "header.php";?>
             </form>
         </div>
     </div>
+
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Переключение форм
+        const loginForm = document.getElementById('loginForm');
+        const regForm = document.getElementById('regForm');
+        const showLoginBtn = document.getElementById('showLoginBtn');
+        const showRegBtn = document.getElementById('showRegBtn');
+        
+        showLoginBtn.addEventListener('click', function() {
+            loginForm.style.display = 'block';
+            regForm.style.display = 'none';
+            showLoginBtn.classList.add('active');
+            showRegBtn.classList.remove('active');
+        });
+        
+        showRegBtn.addEventListener('click', function() {
+            loginForm.style.display = 'none';
+            regForm.style.display = 'block';
+            showRegBtn.classList.add('active');
+            showLoginBtn.classList.remove('active');
+        });
+        
+        // Обработка телефона в регистрации
+        const phoneInput = document.getElementById('phoneInput');
+        const phoneHint = document.getElementById('phoneHint');
+        const form = document.getElementById('registrationForm');
+
+        function formatPhoneNumber(value) {
+            const numbers = value.replace(/\D/g, '');
+            
+            if (numbers.length === 0) return '';
+            if (numbers.length <= 3) return `(${numbers}`;
+            if (numbers.length <= 6) return `(${numbers.slice(0,3)}) ${numbers.slice(3)}`;
+            if (numbers.length <= 8) return `(${numbers.slice(0,3)}) ${numbers.slice(3,6)}-${numbers.slice(6)}`;
+            return `(${numbers.slice(0,3)}) ${numbers.slice(3,6)}-${numbers.slice(6,8)}-${numbers.slice(8,10)}`;
+        }
+
+        function validatePhoneNumber(value) {
+            const numbers = value.replace(/\D/g, '');
+            return numbers.length === 10;
+        }
+
+        function updatePhoneInput() {
+            let formatted = formatPhoneNumber(phoneInput.value);
+            phoneInput.value = formatted;
+            
+            if (validatePhoneNumber(phoneInput.value)) {
+                phoneInput.classList.add('phone-valid');
+                phoneInput.classList.remove('phone-invalid');
+                phoneHint.style.color = '#4caf50';
+                phoneHint.textContent = '✓ Номер корректный';
+            } else {
+                phoneInput.classList.remove('phone-valid');
+                phoneInput.classList.add('phone-invalid');
+                phoneHint.style.color = '#f44336';
+                phoneHint.textContent = '✗ Формат: (XXX) XXX-XX-XX';
+            }
+        }
+
+        if (phoneInput) {
+            phoneInput.addEventListener('input', updatePhoneInput);
+            
+            phoneInput.addEventListener('focus', function() {
+                if (!this.value) {
+                    this.value = '(';
+                }
+            });
+
+            form.addEventListener('submit', function(e) {
+                const numbers = phoneInput.value.replace(/\D/g, '');
+                
+                if (numbers.length !== 10) {
+                    e.preventDefault();
+                    phoneInput.classList.add('phone-invalid');
+                    phoneHint.style.color = '#f44336';
+                    phoneHint.textContent = '✗ Введите корректный номер телефона';
+                    
+                    phoneInput.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                } else {
+                    phoneInput.value = numbers;
+                }
+            });
+        }
+    });
+    </script>
 <?php } else { ?>
     <h1>Ваш аккаунт</h1>
     <div class="block_wrapper">
@@ -312,9 +483,10 @@ include "header.php";?>
             <?php 
             switch ($_GET['slide']) {
                 case 1:
+                    $phone_number = preg_replace('/^7/', '', $_SESSION['user_data']['phone_number']);
                     echo  
                     '<div class="slide1">
-                    <form action="auth_edit.php?id='.$_SESSION['user_data']['id'].'" method="post">
+                    <form action="auth_edit.php?id='.$_SESSION['user_data']['id'].'" method="post" id="editForm">
                         <ul>
                             <li>
                                 <input type="text" class="input_style" value="'.$_SESSION['user_data']['login'].'" name="login" required>
@@ -329,8 +501,12 @@ include "header.php";?>
                                 <h4>Фамилия</h4>
                             </li>
                             <li>
-                                <input type="text" class="input_style" value="'.$_SESSION['user_data']['phone_number'].'" name="phone" required>
+                                <div class="phone-input-wrapper">
+                                    <span class="phone-prefix">+7</span>
+                                    <input type="tel" class="input_style" value="'.$phone_number.'" name="phone" id="editPhoneInput" required>
+                                </div>
                                 <h4>Номер телефона</h4>
+                                <div class="phone-hint" id="editPhoneHint"></div>
                             </li>
                             <li>
                                 <input type="text" class="input_style" value="'.$_SESSION['user_data']['password'].'" name="password" required>
@@ -342,6 +518,80 @@ include "header.php";?>
                             </li>
                         </ul>
                     </form></div>';
+                    
+                    echo '
+                    <script>
+                    document.addEventListener(\'DOMContentLoaded\', function() {
+                        const phoneInput = document.getElementById(\'editPhoneInput\');
+                        const phoneHint = document.getElementById(\'editPhoneHint\');
+                        const form = document.getElementById(\'editForm\');
+
+                        function formatPhoneNumber(value) {
+                            const numbers = value.replace(/\D/g, \'\');
+                            
+                            if (numbers.length === 0) return \'\';
+                            if (numbers.length <= 3) return `(${numbers}`;
+                            if (numbers.length <= 6) return `(${numbers.slice(0,3)}) ${numbers.slice(3)}`;
+                            if (numbers.length <= 8) return `(${numbers.slice(0,3)}) ${numbers.slice(3,6)}-${numbers.slice(6)}`;
+                            return `(${numbers.slice(0,3)}) ${numbers.slice(3,6)}-${numbers.slice(6,8)}-${numbers.slice(8,10)}`;
+                        }
+
+                        function validatePhoneNumber(value) {
+                            const numbers = value.replace(/\D/g, \'\');
+                            return numbers.length === 10;
+                        }
+
+                        function updatePhoneInput() {
+                            let formatted = formatPhoneNumber(phoneInput.value);
+                            phoneInput.value = formatted;
+                            
+                            if (validatePhoneNumber(phoneInput.value)) {
+                                phoneInput.classList.add(\'phone-valid\');
+                                phoneInput.classList.remove(\'phone-invalid\');
+                                phoneHint.style.color = \'#4caf50\';
+                                phoneHint.textContent = \'✓ Номер корректный\';
+                            } else {
+                                phoneInput.classList.remove(\'phone-valid\');
+                                phoneInput.classList.add(\'phone-invalid\');
+                                phoneHint.style.color = \'#f44336\';
+                                phoneHint.textContent = \'✗ Формат: (XXX) XXX-XX-XX\';
+                            }
+                        }
+
+                        if (phoneInput) {
+                            phoneInput.addEventListener(\'input\', updatePhoneInput);
+                            
+                            phoneInput.addEventListener(\'focus\', function() {
+                                if (!this.value) {
+                                    this.value = \'(\';
+                                }
+                            });
+
+                            form.addEventListener(\'submit\', function(e) {
+                                const numbers = phoneInput.value.replace(/\D/g, \'\');
+                                
+                                if (numbers.length !== 10) {
+                                    e.preventDefault();
+                                    phoneInput.classList.add(\'phone-invalid\');
+                                    phoneHint.style.color = \'#f44336\';
+                                    phoneHint.textContent = \'✗ Введите корректный номер телефона\';
+                                    
+                                    phoneInput.scrollIntoView({ behavior: \'smooth\', block: \'center\' });
+                                } else {
+                                    phoneInput.value = numbers;
+                                }
+                            });
+
+                            // Форматируем существующий номер при загрузке
+                            if (phoneInput.value) {
+                                const numbers = phoneInput.value.replace(/\D/g, \'\');
+                                if (numbers.length > 0) {
+                                    phoneInput.value = formatPhoneNumber(numbers);
+                                }
+                            }
+                        }
+                    });
+                    </script>';
                     break;
                     
                 case 2: 
