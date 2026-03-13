@@ -2,7 +2,7 @@
 session_start();
 include "db.php";
 
-    // Получаем текущую дату
+    
 if (!empty($_POST['addres']) && !empty($_POST['tariff_select']) && !empty($_SESSION['id_user']))
 {
 

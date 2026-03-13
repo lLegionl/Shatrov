@@ -129,7 +129,7 @@ include "header.php";?>
                     <li><p class="users_info">Логин: '.$user['login'].'</p></li>
                     <li><p class="users_info">Имя: '.$user['name'].'</p></li>
                     <li><p class="users_info">Фамилия: '.$user['surname'].'</p></li>
-                    <li><p class="users_info">Телефон: '.$user['phone_number'].'</p></li>
+                    <li><p class="users_info">Телефон: +7'.$user['phone_number'].'</p></li>
                     <li><button class="edit_btn"><a href="action_admin.php?action=edit_user&id='.$user['id'].'">Изменить</a></button></li>
                     <li><button class="edit_btn"><a href="delete.php?delete=user&id='.$user['id'].'">Удалить</a></button></li>
                 </ul>
